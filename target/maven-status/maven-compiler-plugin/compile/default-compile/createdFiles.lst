@@ -1,0 +1,5 @@
+fr\venazia\prison\Main.class
+fr\venazia\prison\commands\PrisonCommand.class
+fr\venazia\prison\utils\Messages.class
+fr\venazia\prison\utils\CommandUtils.class
+fr\venazia\prison\utils\DefaultFontInfo.class
