@@ -19,6 +19,7 @@ public final class Main extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        logger = new PluginLogger(this);
         logger.info("Démarrage du plugin");
         INSTANCE = this;
         saveDefaultConfig();
