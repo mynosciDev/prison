@@ -1,0 +1,31 @@
+name: prison
+version: '1.0'
+main: fr.venazia.prison.Main
+api-version: '1.20'
+authors: [ mynosci ]
+commands:
+    prison:
+        description: Commande principale du plugin Prison
+        usage: /prison
+        permission: prison.command
+        aliases: [prison, prisongest]
+    setspawn:
+        description: Commande pour définir le spawn de la prison
+        usage: /setspawn
+        permission: prison.setspawn
+        aliases: [setspawn, prisonsetspawn]
+    spawn:
+        description: Commande pour se téléporter au spawn de la prison
+        usage: /spawn
+        permission: prison.spawn
+        aliases: [spawn, prisonspawn]
+    resetmine:
+        description: Commande pour reset une mine
+        usage: /resetmine
+        permission: prison.resetmine
+        aliases: [prisonresetmine, prm, prisonreset, resetm]
+    setmine:
+        description: Commande pour définir une mine
+        usage: /setmine
+        permission: prison.setmine
+        aliases: [prisonsetmine, psm, prisonset, setm]
