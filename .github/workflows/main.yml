@@ -37,4 +37,4 @@ jobs:
           REMOTE_DIR: '/home/venazia/prison/plugins'
         run: |
           sudo apt-get install -y sshpass
-          sshpass -p $SFTP_PASSWORD scp -o StrictHostKeyChecking=no target/prison-1.0-SNAPSHOT.jar= $SFTP_USER@$SFTP_SERVER:$REMOTE_DIR
+          sshpass -p $SFTP_PASSWORD scp -o StrictHostKeyChecking=no target/prison-1.0-SNAPSHOT.jar $SFTP_USER@$SFTP_SERVER:$REMOTE_DIR
