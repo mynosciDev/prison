@@ -3,7 +3,54 @@ version: '1.0'
 main: fr.venazia.prison.Main
 api-version: '1.20'
 authors: [ mynosci ]
+depends: [ WorldGuard, WorldEdit ]
+softdepends:
+    - PlaceholderAPI
 commands:
+    createkit:
+        description: Commande pour créer un kit
+        usage: /createkit §c<kit>
+        permission: prison.createkit
+        aliases: [prisoncreatekit, ck, createk]
+    kit:
+        description: Commande pour recevoir un kit
+        usage: /kit §c<kit>
+        permission: prison.kit
+        aliases: [prisonkit, k]
+    broadcast:
+        description: bc
+        aliases: [bc, broadcast]
+    gamemode:
+        description: gm
+        aliases: [gm, gamemode]
+    lookup:
+        description: lookup
+    valeur:
+        description: Commande pour voir la valeur d'un bloc
+        usage: /valeur §c<bloc>
+        aliases: [prisonvaleur, value, values]
+    jailconteste:
+        permission: prison.admin
+    money:
+        description: Commande pour voir son argent
+        usage: /money
+        permission: prison.money
+        aliases: [prisonmoney, m, bal]
+    rankup:
+        description: Commande pour monter de grade
+        usage: /rankup
+        permission: prison.rankup
+        aliases: [prisonrankup, ru, prisonup, up]
+    minereset:
+        description: Commande pour reset une mine
+        usage: /minereset §c<mine>
+        permission: prison.minereset
+        aliases: [prisonminereset, mr, prisonreset, reset]
+    blocksbroken:
+        description: Commande pour voir le nombre de blocs cassés
+        usage: /blocks
+        permission: prison.blocksbroken
+        aliases: [prisonblocksbroken, blocksb, bb]
     prison:
         description: Commande principale du plugin Prison
         usage: /prison

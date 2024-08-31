@@ -14,7 +14,6 @@ public class Messages {
 
     public static void sendCentered(Player p, String m){
         int messagePxSize = 0;
-        m = ChatColor.translateAlternateColorCodes('&', m);
         boolean previousCode = false;
         boolean isBold = false;
         for(char c : m.toCharArray()){
@@ -42,6 +41,7 @@ public class Messages {
             sb.append(" ");
             compensated += spaceLength;
         }
+        m = ChatColor.translateAlternateColorCodes('&', m);
         p.sendMessage(sb.toString() + m);
     }
 

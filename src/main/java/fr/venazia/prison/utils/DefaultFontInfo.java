@@ -70,7 +70,7 @@ public enum DefaultFontInfo{
     DOLLAR_SIGN('$', 5),
     PERCENT('%', 5),
     UP_ARROW('^', 5),
-    AMPERSAND('&', 5),
+    AMPERSAND('§', 5),
     ASTERISK('*', 5),
     LEFT_PARENTHESIS('(', 4),
     RIGHT_PERENTHESIS(')', 4),
