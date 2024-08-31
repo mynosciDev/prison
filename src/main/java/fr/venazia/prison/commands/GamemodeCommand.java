@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 public class GamemodeCommand implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
-        if(!(commandSender instanceof Player)){
+        if(commandSender instanceof Player){
             Player p = (Player) commandSender;
             if(!p.hasPermission("admin")) {
                 p.sendMessage("§cVous n'avez pas la permission d'executer cette commande.");
@@ -36,7 +36,9 @@ public class GamemodeCommand implements CommandExecutor {
                     p.sendMessage("§cUtilisation: /gamemode <0/1/2/3> [joueur]");
                 }
             }
-        }
+        } else {
+            commandSender.sendMessage("§cCette commande est executable uniquement par un joueur !");
+            }
         return false;
     }
 }

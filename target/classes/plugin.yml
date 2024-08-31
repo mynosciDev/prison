@@ -3,10 +3,12 @@ version: '1.0'
 main: fr.venazia.prison.Main
 api-version: '1.20'
 authors: [ mynosci ]
-depends: [ WorldGuard, WorldEdit ]
+depends: [ WorldEdit ]
 softdepends:
     - PlaceholderAPI
 commands:
+    god:
+        description: GodMode
     createkit:
         description: Commande pour créer un kit
         usage: /createkit §c<kit>
@@ -16,12 +18,13 @@ commands:
         description: Commande pour recevoir un kit
         usage: /kit §c<kit>
         permission: prison.kit
-        aliases: [prisonkit, k]
+        aliases: [prisonkit, getkit]
     broadcast:
         description: bc
         aliases: [bc, broadcast]
     gamemode:
         description: gm
+        permission: prison.staff
         aliases: [gm, gamemode]
     lookup:
         description: lookup

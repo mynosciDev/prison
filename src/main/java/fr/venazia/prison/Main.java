@@ -1,5 +1,9 @@
 package fr.venazia.prison;
 
+import com.sk89q.worldedit.WorldEdit;
+import com.sk89q.worldedit.command.WorldEditCommands;
+import com.sk89q.worldguard.WorldGuard;
+import com.sk89q.worldguard.commands.WorldGuardCommands;
 import fr.venazia.prison.commands.*;
 import fr.venazia.prison.listeners.PrisonListener;
 import fr.venazia.prison.utils.KitManager;
@@ -7,11 +11,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginLogger;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import fr.venazia.prison.listeners.PrisonListener;
-import fr.venazia.prison.utils.KitManager;
-import org.bukkit.Bukkit;
-import org.bukkit.plugin.PluginLogger;
-import org.bukkit.plugin.java.JavaPlugin;
+
 
 public final class Main extends JavaPlugin {
     private KitManager kitManager;
@@ -45,10 +45,13 @@ public final class Main extends JavaPlugin {
 
     private void regListeners(){
         getServer().getPluginManager().registerEvents(new PrisonListener(), this);
+        getServer().getPluginManager().registerEvents(new GodCommand(), this);
     }
 
     public void regCommands() {
+        
         //utils
+        getCommand("god").setExecutor(new GodCommand());
         getCommand("createkit").setExecutor(new CreateKitCommand(Main.getINSTANCE()));
         getCommand("kit").setExecutor(new KitCommand(Main.getINSTANCE()));
         getCommand("broadcast").setExecutor(new BroadcastCommand());

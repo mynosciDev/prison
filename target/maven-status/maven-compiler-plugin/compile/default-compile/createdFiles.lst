@@ -1,4 +1,5 @@
 fr\venazia\prison\utils\DataUtils.class
+fr\venazia\prison\commands\GodCommand.class
 fr\venazia\prison\commands\ValueCommand.class
 fr\venazia\prison\utils\DefaultFontInfo.class
 fr\venazia\prison\commands\RankupCommand.class
