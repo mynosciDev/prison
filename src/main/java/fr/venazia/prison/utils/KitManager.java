@@ -1,25 +1,27 @@
 package fr.venazia.prison.utils;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import fr.venazia.prison.utils.Kit;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
-
+import fr.venazia.prison.*;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class KitManager {
+
     private final Map<String, Kit> kits = new HashMap<>();
     private final JavaPlugin plugin;
-    private final Gson gson = new Gson();
+    public final Gson gson;
     private final File kitsFolder;
 
     public KitManager(JavaPlugin plugin) {
@@ -28,10 +30,23 @@ public class KitManager {
         if (!kitsFolder.exists()) {
             kitsFolder.mkdirs();
         }
+
+        // Initialize Gson with the custom TypeAdapter for Optional
+        this.gson = new GsonBuilder()
+                .registerTypeAdapter(new TypeToken<Optional<Object>>(){}.getType(), new OptionalTypeAdapter<>(new Gson().getAdapter(Object.class)))
+                .create();
     }
 
-    public void createKit(String name, List<ItemStack> items, long cooldown) {
-        Kit kit = new Kit(name, items, cooldown);
+    public void createKitFromPlayer(Player player, String name, long cooldown) {
+        List<ItemStack> items = Arrays.stream(player.getInventory().getContents())
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+        createKit(name, cooldown, items);
+        Bukkit.getLogger().info("Kit '" + name + "' créé avec succès à partir de l'inventaire du joueur " + player.getName());
+    }
+
+    public void createKit(String name, long cooldown, List<ItemStack> items) {
+        Kit kit = new Kit(name, cooldown, items);
         kits.put(name, kit);
         saveKitToFile(kit);
     }
@@ -58,6 +73,7 @@ public class KitManager {
 
     private void saveKitToFile(Kit kit) {
         File kitFile = new File(kitsFolder, kit.getName() + ".json");
+        Bukkit.broadcastMessage(kit.toString());
         try (FileWriter writer = new FileWriter(kitFile)) {
             gson.toJson(kit, writer);
         } catch (IOException e) {

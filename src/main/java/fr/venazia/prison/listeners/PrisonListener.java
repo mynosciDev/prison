@@ -34,6 +34,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.UUID;
 
 import static fr.venazia.prison.commands.StaffContesteCommand.contest;
@@ -90,16 +91,49 @@ public class PrisonListener implements Listener {
                 Messages.sendMessage(p, "&cVous devez être dans votre île pour effectuer cette action.");
                 e.getBlock().breakNaturally();
                 return;
+            } else {
+                if (l1.equalsIgnoreCase("[Privé]")) {
+                    if (l2.isEmpty()) {
+                        Messages.sendMessage(p, "&8[&cAnti-Trahison&8] &cMerci de spécifier au moins un joueur");
+                        e.getBlock().breakNaturally();
+                    } else {
+                        OfflinePlayer l2p = Bukkit.getOfflinePlayer(l2);
+                        if(!l2p.hasPlayedBefore()) {
+                            Messages.sendMessage(p, "&8[&cAnti-Trahison&8] &cCe joueur n'a jamais rejoint le serveur !");
+                        } else {
+                            Messages.sendMessage(p, "&8[&cAnti-Trahison&8] &a" + l2p.getName() + " &ea été correctement ajouté à la liste des personnes de confiance.");
+                        }
+                    } if(l3.isEmpty()){
+                        Messages.sendMessage(p, "&8[&cAnti-Trahison&8] &bBloc protégé avec succès !");
+                    } else {
+                        OfflinePlayer l3p = Bukkit.getOfflinePlayer(l3);
+                        if(!l3p.hasPlayedBefore()){
+                            Messages.sendMessage(p, "&8[&cAnti-Trahison&8] &cCe joueur n'a jamais rejoint le serveur !");
+                        } else {
+                            Messages.sendMessage(p, "&8[&cAnti-Trahison&8] &a" + l3p.getName() + " &ea été correctement ajouté à la liste des personnes de confiance.");
+                        }
+                    } if (l4.isEmpty()) {
+                        Messages.sendMessage(p, "&8[&cAnti-Trahison&8] &bBloc protégé avec succès !");
+                    } else {
+                        OfflinePlayer l4p = Bukkit.getOfflinePlayer(l4);
+                        if(!l4p.hasPlayedBefore()){
+                            Messages.sendMessage(p, "&cCe joueur n'a jamais rejoint le serveur !");
+                        } else {
+                            Messages.sendMessage(p, "&8[&cAnti-Trahison&8] &a" + l4p.getName() + " &ea été correctement ajouté à la liste des personnes de confiance.");
+                            Messages.sendMessage(p, "&8[&cAnti-Trahison&8] &bBloc protégé avec succès !");
+                        }
+                    }
+                }
             }
         }
         if (l1.equalsIgnoreCase("[Privé]")) {
             if (l2.isEmpty()) {
-                Messages.sendMessage(p, "&4Erreur: &cVous devez spécifier au moins un joueur.");
+                Messages.sendMessage(p, "&8[&cAnti-Trahison&8] &cMerci de spécifier au moins un joueur");
                 e.getBlock().breakNaturally();
             } else {
                 OfflinePlayer l2p = Bukkit.getOfflinePlayer(l2);
                 if(!l2p.hasPlayedBefore()) {
-                    Messages.sendMessage(p, "&cCe joueur n'a jamais rejoint le serveur !");
+                    Messages.sendMessage(p, "&8[&cAnti-Trahison&8] &cCe joueur n'a jamais rejoint le serveur !");
                 } else {
                     Messages.sendMessage(p, "&8[&cAnti-Trahison&8] &a" + l2p.getName() + " &ea été correctement ajouté à la liste des personnes de confiance.");
                 }
@@ -108,7 +142,7 @@ public class PrisonListener implements Listener {
             } else {
                 OfflinePlayer l3p = Bukkit.getOfflinePlayer(l3);
                 if(!l3p.hasPlayedBefore()){
-                    Messages.sendMessage(p, "&cCe joueur n'a jamais rejoint le serveur !");
+                    Messages.sendMessage(p, "&8[&cAnti-Trahison&8] &cCe joueur n'a jamais rejoint le serveur !");
                 } else {
                     Messages.sendMessage(p, "&8[&cAnti-Trahison&8] &a" + l3p.getName() + " &ea été correctement ajouté à la liste des personnes de confiance.");
                 }
@@ -150,7 +184,7 @@ public class PrisonListener implements Listener {
         for (int[] offset : offsets) {
             Block relativeBlock = chestBlock.getRelative(offset[0], offset[1], offset[2]);
 
-            if (relativeBlock.getType() == Material.OAK_SIGN || relativeBlock.getType() == Material.OAK_WALL_SIGN) {
+            if (relativeBlock.getType() == Material.OAK_SIGN || relativeBlock.getType() == Material.OAK_WALL_SIGN || relativeBlock.getType() == Material.ACACIA_SIGN || relativeBlock.getType() == Material.BIRCH_SIGN){
                 Sign sign = (Sign) relativeBlock.getState();
                 if (sign.getLine(0).equalsIgnoreCase("[Privé]")) {
                     for (int i = 1; i < 4; i++) {
@@ -168,6 +202,15 @@ public class PrisonListener implements Listener {
     }
 
 
+    @EventHandler
+    public void onSignChange2(SignChangeEvent event) {
+        Player player = event.getPlayer();
+        if (player.hasPermission("sign.color")) {
+            for (int i = 0; i < 4; i++) {
+                event.setLine(i, ChatColor.translateAlternateColorCodes('&', (Objects.requireNonNull(event.getLine(i)))));
+            }
+        }
+    }
 
     @EventHandler
     public void onPlayerChat(AsyncPlayerChatEvent e){
@@ -202,7 +245,7 @@ public class PrisonListener implements Listener {
             blocs++;
             jsonObject.put("blocs", blocs);
             try (FileWriter file = new FileWriter(playerFile)) {
-                file.write(jsonObject.toString(4)); // Écriture avec indentation pour plus de lisibilité
+                file.write(jsonObject.toString(4));
                 file.flush();
             } catch (IOException error) {
                 error.printStackTrace();

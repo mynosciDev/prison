@@ -8,12 +8,30 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class DataUtils {
     /*
       DataUtils class
       Get information about playerData, mines
      */
+
+
+    public static List<String> getWarps() {
+        File warpDir = new File(Main.getINSTANCE().getDataFolder(), "warps");
+        File[] files = warpDir.listFiles();
+        List<String> warps = new ArrayList<>();
+        for (File file : files) {
+            if (file.getName().endsWith(".json")) {
+                warps.add(file.getName());
+            }
+        }
+        return warps;
+    }
+
+
 
     public static Object readValue(String key, String uuid) throws IOException {
         File playersDir = new File(Main.getINSTANCE().getDataFolder(), "players");

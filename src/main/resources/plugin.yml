@@ -7,6 +7,8 @@ depends: [ WorldEdit ]
 softdepends:
     - PlaceholderAPI
 commands:
+    warp:
+        description: tp warp
     god:
         description: GodMode
     createkit:

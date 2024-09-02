@@ -1,5 +1,7 @@
 package fr.venazia.prison.commands;
 
+import com.bgsoftware.superiorskyblock.api.SuperiorSkyblockAPI;
+import com.bgsoftware.superiorskyblock.api.key.Key;
 import fr.venazia.prison.utils.Messages;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -8,6 +10,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+
+import java.math.BigDecimal;
 
 public class ValueCommand implements CommandExecutor {
     @Override
@@ -49,7 +53,8 @@ public class ValueCommand implements CommandExecutor {
                             }
                             break;
                         default:
-                            Messages.sendMessage(p, "&cL'objet que vous tenez en main n'a pas de valeur, ou elle est inférieure à 5.");
+                            BigDecimal val = SuperiorSkyblockAPI.getBlockValues().getBlockWorth(Key.of(itemType));
+                            Messages.sendMessage(p, "&aLa valeur de l'objet que vous tenez en main est de &e" + (val.multiply(BigDecimal.valueOf(amount))) + "&a.");
                             return true;
                     }
 

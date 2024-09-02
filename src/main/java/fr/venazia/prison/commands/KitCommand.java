@@ -10,7 +10,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class KitCommand implements CommandExecutor {
-    private final KitManager kitManager;
+    public final KitManager kitManager;
 
     public KitCommand(JavaPlugin plugin) {
         this.kitManager = ((Main) plugin).getKitManager();

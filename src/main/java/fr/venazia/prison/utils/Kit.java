@@ -2,10 +2,7 @@ package fr.venazia.prison.utils;
 
 import org.bukkit.inventory.ItemStack;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class Kit {
     private String name;
@@ -13,7 +10,7 @@ public class Kit {
     private long cooldown; // cooldown en millisecondes
     private Map<UUID, Long> lastUsed; // Map pour stocker la dernière utilisation du kit par joueur
 
-    public Kit(String name, List<ItemStack> items, long cooldown) {
+    public Kit(String name, long cooldown, List<ItemStack> items) {
         this.name = name;
         this.items = items;
         this.cooldown = cooldown;
@@ -24,13 +21,23 @@ public class Kit {
         return name;
     }
 
-    public List<ItemStack> getItems() {
+    public List<ItemStack>  getItems() {
         return items;
     }
 
     public long getCooldown() {
         return cooldown;
     }
+
+    @Override
+    public String toString() {
+        return "Kit{" +
+                "name='" + name + '\'' +
+                ", cooldown=" + cooldown +
+                ", items=" + items +
+                '}';
+    }
+
 
     public boolean canUse(UUID playerUUID) {
         Long lastUseTime = lastUsed.get(playerUUID);
