@@ -2,30 +2,44 @@ package fr.venazia.prison;
 
 import com.sk89q.worldedit.WorldEdit;
 import com.sk89q.worldedit.command.WorldEditCommands;
+import com.sk89q.worldedit.command.WorldEditCommandsRegistration;
 import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.commands.WorldGuardCommands;
 import fr.venazia.prison.commands.*;
 import fr.venazia.prison.listeners.PrisonListener;
 import fr.venazia.prison.utils.KitManager;
+import fr.venazia.prison.utils.Placeholders;
 import fr.venazia.prison.utils.WarpManager;
 import fr.venazia.prison.warps.Warp;
+import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.command.defaults.HelpCommand;
 import org.bukkit.plugin.PluginLogger;
 import org.bukkit.plugin.java.JavaPlugin;
-
+import org.checkerframework.checker.nullness.qual.NonNull;
+import revxrsal.commands.Lamp;
+import revxrsal.commands.bukkit.BukkitLamp;
+import revxrsal.commands.bukkit.actor.BukkitCommandActor;
 
 
 public final class Main extends JavaPlugin {
     private KitManager kitManager;
     private static PluginLogger logger;
     private static Main INSTANCE;
-    public boolean isDebug = getConfig().getBoolean("debug");
     public static Main getINSTANCE() {
         return INSTANCE;
     }
     private WarpManager warpManager;
+    private BukkitAudiences adventure;
+
+    public @NonNull BukkitAudiences adventure() {
+        if(this.adventure == null) {
+            throw new IllegalStateException("Tried to access Adventure when the plugin was disabled!");
+        }
+        return this.adventure;
+    }
 
     public KitManager getKitManager() {
         return kitManager;
@@ -33,6 +47,7 @@ public final class Main extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        this.adventure = BukkitAudiences.create(this);
         this.warpManager = new WarpManager();
         logger = new PluginLogger(this);
         logger.info("Démarrage du plugin");
@@ -56,6 +71,8 @@ public final class Main extends JavaPlugin {
     private void regListeners(){
         getServer().getPluginManager().registerEvents(new PrisonListener(), this);
         getServer().getPluginManager().registerEvents(new GodCommand(), this);
+        getServer().getPluginManager().registerEvents(new VoyageCommand(), this);
+        getServer().getPluginManager().registerEvents(new EventCommand(), this);
     }
 
     public void regOthers() {
@@ -63,14 +80,24 @@ public final class Main extends JavaPlugin {
         World divers = Bukkit.getWorld("divers");
         World mines = Bukkit.getWorld("mines");
         World pvp = Bukkit.getWorld("pvp");
+        warpManager.addWarp("a", new Location(mines, -1070, 23, -1275));
         warpManager.addWarp("tuto", new Location(divers,  458, 114, 1198));
         warpManager.addWarp("mines", new Location(mines, -1073, 23, -1275));
         warpManager.addWarp("pvp", new Location(pvp, 84, -9, 3));
+        //Reg Placeholders
+        new Placeholders(this).register();
     }
 
 
     public void regCommands() {
-        //utils
+        Lamp<BukkitCommandActor> b = BukkitLamp.builder(this).build();
+        b.register(new ModerationCommand(), new BugCommand(), new SellCommands(), new EventCommand());
+        getCommand("permile").setExecutor(new UtilsCommand());
+        getCommand("acceptquest").setExecutor(new AcceptQuestCommand());
+        getCommand("darkmarket").setExecutor(new DarkMarketCommand());
+        getCommand("prestige").setExecutor(new PrestigeCommand());
+        getCommand("market").setExecutor(new MarketCommand());
+        getCommand("voyages").setExecutor(new VoyageCommand());
         getCommand("warp").setExecutor(new WarpCommand(getWarpManager()));
         getCommand("god").setExecutor(new GodCommand());
         kitManager = new KitManager(this);
@@ -83,6 +110,10 @@ public final class Main extends JavaPlugin {
         getCommand("jailconteste").setExecutor(new StaffContesteCommand());
         getCommand("prison").setExecutor(new PrisonCommand());
         getCommand("prison").setTabCompleter(new PrisonCommand());
+        getCommand("help").setExecutor(new UtilsCommand());
+        getCommand("iname").setExecutor(new UtilsCommand());
+        getCommand("uptime").setExecutor(new UtilsCommand());
+        getCommand("lore").setExecutor(new UtilsCommand());
         getCommand("blocksbroken").setExecutor(new BlocksCommand());
         getCommand("spawn").setExecutor(new SpawnCommand());
         getCommand("minereset").setExecutor(new MineResetCommand());
@@ -92,7 +123,10 @@ public final class Main extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+        if(this.adventure != null) {
+            this.adventure.close();
+        }
+        logger.info("Arrêt du plugin");
     }
 }
 

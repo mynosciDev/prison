@@ -7,9 +7,45 @@ depends: [ WorldEdit ]
 softdepends:
     - PlaceholderAPI
 commands:
+    darkmarket:
+        description: NPC pour le marché noir
+    acceptquest:
+        description: Commande pour accepter une quête
+        usage: /acceptquest §c<quête>
+        permission: prison.acceptquest
+        aliases: [prisonacceptquest, aq, acceptq]
+    prestige:
+        description: Commande pour monter de prestige
+        usage: /prestige
+        permission: prison.prestige
+        aliases: [prisonprestige, pr, prestige]
+    is:
+        description: Commande pour voir les informations de ton île
+    permile:
+        description: Commande pour voir les permissions de ton île
+    market:
+        description: NPC pour le marché
+    voyages:
+        aliases:
+            - voyage
+        permission-message: '§8[§cNPC§8] §cVous devez passer par le NPC §2§lVoyageur §c(au spawn) pour accéder à cette commande.'
+    help:
+        description: helper
+    lore:
+        permission: prison.iname
+        description: Lore
+        aliases: [ilore]
+    uptime:
+        permission: prison.iname
+        description: Uptime du serveur
+    iname:
+        description: IName
+        permission: prison.iname
+        aliases: [iname, itemname, itemsname, itemsetname]
     warp:
         description: tp warp
     god:
+        permission: prison.iname
         description: GodMode
     createkit:
         description: Commande pour créer un kit

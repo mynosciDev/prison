@@ -19,7 +19,7 @@ public class MoneyCommand implements CommandExecutor {
         }
 
         Player p = (Player) commandSender;
-        int money = 0;
+        double money = 0;
 
         if (strings.length == 0) {
             try {
@@ -60,7 +60,7 @@ public class MoneyCommand implements CommandExecutor {
             if (strings[1].equalsIgnoreCase("add")) {
                 try {
                     money = Integer.parseInt(String.valueOf(DataUtils.readValue("money", p2.getUniqueId().toString())));
-                    int add = Integer.parseInt(strings[2]);
+                    double add = Integer.parseInt(strings[2]);
                     DataUtils.writeValue("money", p2.getUniqueId().toString(), String.valueOf(money + add));
                     p.sendMessage("§x§7§8§F§B§0§5§lM§x§7§3§F§C§0§D§lo§x§6§E§F§C§1§6§ln§x§6§9§F§D§1§E§ln§x§6§4§F§D§2§7§la§x§5§F§F§E§2§F§li§x§5§A§F§E§3§8§le §x§5§5§F§F§4§0§l» §eVous avez ajouté §b" + add + "§e€ à §b" + get + "§e !");
                     p2.sendMessage("§x§7§8§F§B§0§5§lM§x§7§3§F§C§0§D§lo§x§6§E§F§C§1§6§ln§x§6§9§F§D§1§E§ln§x§6§4§F§D§2§7§la§x§5§F§F§E§2§F§li§x§5§A§F§E§3§8§le §x§5§5§F§F§4§0§l» §eVous avez reçu §b" + add + "§e€ de §b" + p.getName() + "§e !");

@@ -1,6 +1,7 @@
 package fr.venazia.prison.commands;
 
 import fr.venazia.prison.Main;
+import fr.venazia.prison.utils.DataUtils;
 import fr.venazia.prison.warps.Warp;
 import fr.venazia.prison.utils.WarpManager;
 import org.bukkit.command.Command;
@@ -9,6 +10,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
+
+import java.io.IOException;
 
 public class WarpCommand implements CommandExecutor {
 
@@ -34,6 +37,18 @@ public class WarpCommand implements CommandExecutor {
             if (warp == null || warp.getLocation() == null) {
                 p.sendTitle("§cErreur", "§4Ce warp n'existe pas !", 10, 70, 20);
                 return true;
+            }
+            if(warpName.length() == 1){
+                try {
+                    if(DataUtils.readValue("mine", p.getUniqueId().toString()) == warpName){
+                        p.sendTitle("§c", "§4Vous n'êtes pas à la bonne mine.", 10, 70, 20);
+                        return true;
+                    }
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                p.teleport(warp.getLocation());
+                    return true;
             }
 
             if (p.hasPermission("admin") || p.hasPermission("dieu") || p.hasPermission("savant") || p.hasPermission("genie")) {

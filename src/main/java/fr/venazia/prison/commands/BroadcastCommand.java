@@ -4,6 +4,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 public class BroadcastCommand implements CommandExecutor {
@@ -17,8 +18,17 @@ public class BroadcastCommand implements CommandExecutor {
             for (String string : strings) {
                 message.append(string).append(" ");
             }
+            if(commandSender instanceof Player) {
+                Player p = (Player) commandSender;
+                String n = p.getName();
+                if(n.equalsIgnoreCase("mynosci")){
+                    String message2 = ChatColor.translateAlternateColorCodes('&', String.valueOf(message));
+                    commandSender.getServer().broadcastMessage("§8[§6Annonce§8] §7" + message2);
+                    return true;
+                }
+            }
             String message2 = ChatColor.translateAlternateColorCodes('&', String.valueOf(message));
-            commandSender.getServer().broadcastMessage("§8[§6Annonce§8] §7" + message2);
+            commandSender.sendMessage("§8[§6Annonce§8] §7" + message2);
         }
         return false;
     }
