@@ -39,13 +39,9 @@ public class WarpCommand implements CommandExecutor {
                 return true;
             }
             if(warpName.length() == 1){
-                try {
-                    if(DataUtils.readValue("mine", p.getUniqueId().toString()) == warpName){
-                        p.sendTitle("§c", "§4Vous n'êtes pas à la bonne mine.", 10, 70, 20);
-                        return true;
-                    }
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+                if(DataUtils.readValue("mine", p.getUniqueId().toString()) == warpName){
+                    p.sendTitle("§c", "§4Vous n'êtes pas à la bonne mine.", 10, 70, 20);
+                    return true;
                 }
                 p.teleport(warp.getLocation());
                     return true;

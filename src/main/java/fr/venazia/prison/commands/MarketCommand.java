@@ -40,6 +40,7 @@ public class MarketCommand implements CommandExecutor, Listener {
                 Bukkit.broadcastMessage("i: " + i);
                 Bukkit.broadcastMessage("Item: " + MarketUtils.getItem(i));
                 inv.setItem(i, MarketUtils.getItem(i));
+                Bukkit.broadcastMessage(item.toString());
             } catch (NullPointerException e) {
                 inv.setItem(i, new ItemBuilder(Material.BARRIER).displayname("§cIl n'y a pas d'items en vente ici !").build());
             }

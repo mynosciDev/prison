@@ -149,6 +149,7 @@ public class PrisonListener implements Listener {
         }
     }
 
+
     @EventHandler
     public void onSignChange(SignChangeEvent e) {
         Player p = e.getPlayer();

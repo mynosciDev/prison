@@ -40,12 +40,8 @@ public class SellCommands {
         }
 
         double money = 0;
-        try {
-            money = Double.parseDouble(String.valueOf(DataUtils.readValue("money", p.getUniqueId().toString())));
-            DataUtils.writeValue("money", p.getUniqueId().toString(), String.valueOf(money + totalValue));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        money = Double.parseDouble(String.valueOf(DataUtils.readValue("money", p.getUniqueId().toString())));
+        DataUtils.writeValue("money", p.getUniqueId().toString(), String.valueOf(money + totalValue));
         if(totalValue == 0) {
             p.sendMessage("§4[➜] §cVous n'avez rien à vendre");
         }
