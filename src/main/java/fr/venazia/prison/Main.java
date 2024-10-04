@@ -81,9 +81,16 @@ public final class Main extends JavaPlugin {
         World mines = Bukkit.getWorld("mines");
         World pvp = Bukkit.getWorld("pvp");
         warpManager.addWarp("a", new Location(mines, -1070, 23, -1275));
+        warpManager.addWarp("b", new Location(mines, -1075, 23, -1195));
         warpManager.addWarp("tuto", new Location(divers,  458, 114, 1198));
         warpManager.addWarp("mines", new Location(mines, -1073, 23, -1275));
         warpManager.addWarp("pvp", new Location(pvp, 84, -9, 3));
+        warpManager.addWarp("c", new Location(mines, -1106, 23, -1356));
+        warpManager.addWarp("d", new Location(mines, -1140, 23, -1376));
+        warpManager.addWarp("e", new Location(mines, -1151, 23, -1259));
+        warpManager.addWarp("f", new Location(mines, -1211, 24, -1256));
+        warpManager.addWarp("g", new Location(mines, -1211, 23, -1339));
+        warpManager.addWarp("h", new Location(mines, -1255, 23, -1194));
         //Reg Placeholders
         new Placeholders(this).register();
     }
@@ -119,6 +126,7 @@ public final class Main extends JavaPlugin {
         getCommand("minereset").setExecutor(new MineResetCommand());
         getCommand("rankup").setExecutor(new RankupCommand());
         getCommand("money").setExecutor(new MoneyCommand());
+        getCommand("chance").setExecutor(new ChanceCommand());
     }
 
     @Override

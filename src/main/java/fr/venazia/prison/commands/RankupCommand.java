@@ -43,8 +43,8 @@ public class RankupCommand implements CommandExecutor {
                 return true;
             } else {
                 if (DataUtils.readValue("money", p.getUniqueId().toString()) != null) {
-                    int money = 0;
-                    money = Integer.parseInt(String.valueOf(DataUtils.readValue("money", p.getUniqueId().toString())));
+                    double money = 0;
+                    money = Double.parseDouble(String.valueOf(DataUtils.readValue("money", p.getUniqueId().toString())));
                     if (money >= price) {
                         DataUtils.writeValue("mine", p.getUniqueId().toString(), n);
                         DataUtils.writeValue("money", p.getUniqueId().toString(), String.valueOf(money - price));

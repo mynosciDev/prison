@@ -22,7 +22,7 @@ public class MoneyCommand implements CommandExecutor {
         double money = 0;
 
         if (strings.length == 0) {
-            money = Integer.parseInt(String.valueOf(DataUtils.readValue("money", p.getUniqueId().toString())));
+            money = Double.parseDouble(String.valueOf(DataUtils.readValue("money", p.getUniqueId().toString())));
             p.sendMessage("§x§7§8§F§B§0§5§lM§x§7§3§F§C§0§D§lo§x§6§E§F§C§1§6§ln§x§6§9§F§D§1§E§ln§x§6§4§F§D§2§7§la§x§5§F§F§E§2§F§li§x§5§A§F§E§3§8§le §x§5§5§F§F§4§0§l» §eVous possédez actuellement §b" + money + "§e€ !");
             return true;
         }
@@ -31,7 +31,7 @@ public class MoneyCommand implements CommandExecutor {
             String get = strings[0];
             String moneyString = DataUtils.readValue("money", get).toString();
             if (moneyString != null) {
-                money = Integer.parseInt(moneyString);
+                money = Double.parseDouble(moneyString);
                 p.sendMessage("§x§7§8§F§B§0§5§lM§x§7§3§F§C§0§D§lo§x§6§E§F§C§1§6§ln§x§6§9§F§D§1§E§ln§x§6§4§F§D§2§7§la§x§5§F§F§E§2§F§li§x§5§A§F§E§3§8§le §x§5§5§F§F§4§0§l» §eLe joueur §b" + get + " §epossède actuellement §b" + money + "§e€ !");
             } else {
                 p.sendMessage("§cLe joueur §b" + get + " §cn'existe pas !");

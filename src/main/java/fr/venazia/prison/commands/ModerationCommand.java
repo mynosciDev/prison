@@ -19,11 +19,11 @@ public class ModerationCommand {
     public void disableCommand(BukkitCommandActor actor, String command) {
         if (actor.isPlayer()) {
             Player p = actor.asPlayer();
-            if (disabledCommands.containsValue(command)) {
+            if(disabledCommands.get(command) == null){
                 disabledCommands.put(command, true);
-                p.sendMessage("§aLa commande " + command + " est désormais désactivée.");
-            } else {
-                disabledCommands.put(command, false);
+                p.sendMessage("§aLa commande " + command + " a été désactivée.");
+            } else if(disabledCommands.get(command)){
+                disabledCommands.remove(command);
                 p.sendMessage("§aLa commande " + command + " a été réactivée.");
             }
         }
@@ -35,12 +35,16 @@ public class ModerationCommand {
     public void lockChat(BukkitCommandActor actor) {
         if (actor.isPlayer()) {
             Player p = actor.asPlayer();
-            if (disabledCommands.containsValue("chat")) {
+            if (disabledCommands.get("chat") == null) {
                 disabledCommands.put("chat", true);
-                p.sendMessage("§aLe chat a été désactivé.");
+                for (Player player : p.getServer().getOnlinePlayers()) {
+                    player.sendMessage("§8[§eChat§8] §c§lLe chat a été désactivé par un membre du staff.");
+                }
             } else {
-                disabledCommands.put("chat", false);
-                p.sendMessage("§aLe chat a été réactivé.");
+                disabledCommands.remove("chat");
+                for (Player player : p.getServer().getOnlinePlayers()) {
+                    player.sendMessage("§8[§eChat§8] §aLe chat a été réactivé.");
+                }
             }
         }
     }

@@ -40,13 +40,13 @@ public class MineResetCommand implements CommandExecutor {
     }
 
     private void resetMine(Player player, String mineName) {
-        if(!player.getWorld().getName().equalsIgnoreCase("mines")){
+        if (!player.getWorld().getName().equalsIgnoreCase("mines")) {
             player.sendMessage("§cVous devez être dans le monde des mines pour utiliser cette commande !");
             return;
         }
         String m = mineName;
         Player p = player;
-        if(m.equalsIgnoreCase("A")) {
+        if (m.equalsIgnoreCase("A")) {
             World world = BukkitAdapter.adapt(player.getWorld());
             BlockVector3 pos1 = BlockVector3.at(-1079, 22, -1287);
             BlockVector3 pos2 = BlockVector3.at(-1103, 8, -1263);
@@ -59,7 +59,7 @@ public class MineResetCommand implements CommandExecutor {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        } else if(m.equalsIgnoreCase("B")){
+        } else if (m.equalsIgnoreCase("B")) {
             World world = BukkitAdapter.adapt(Bukkit.getWorld("mines"));
             BlockVector3 pos1 = BlockVector3.at(-1103, 22, -1206);
             BlockVector3 pos2 = BlockVector3.at(-1079, 8, -1182);
@@ -72,6 +72,102 @@ public class MineResetCommand implements CommandExecutor {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        } else if (m.equalsIgnoreCase("C")) {
+            World world = BukkitAdapter.adapt(Bukkit.getWorld("mines"));
+            BlockVector3 pos1 = BlockVector3.at(-1103, 22, -1344);
+            BlockVector3 pos2 = BlockVector3.at(-1079, 8, -1368);
+            CuboidRegion region = new CuboidRegion(world, pos1, pos2);
+            try (EditSession editSession = WorldEdit.getInstance().newEditSession(world)) {
+                RandomPattern pattern = new RandomPattern();
+                pattern.add(BlockTypes.STONE.getDefaultState(), 90);
+                pattern.add(BlockTypes.CRACKED_STONE_BRICKS.getDefaultState(), 9);
+                pattern.add(BlockTypes.COAL_ORE.getDefaultState(), 1);
+                editSession.setBlocks(region, pattern);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else if (m.equalsIgnoreCase("D")) {
+            World world = BukkitAdapter.adapt(Bukkit.getWorld("mines"));
+            BlockVector3 pos1 = BlockVector3.at(-1168, 22, -1363);
+            BlockVector3 pos2 = BlockVector3.at(-1144, 8, -1387);
+            CuboidRegion region = new CuboidRegion(world, pos1, pos2);
+            try (EditSession editSession = WorldEdit.getInstance().newEditSession(world)) {
+                RandomPattern pattern = new RandomPattern();
+                pattern.add(BlockTypes.STONE.getDefaultState(), 75);
+                pattern.add(BlockTypes.CRACKED_STONE_BRICKS.getDefaultState(), 15);
+                pattern.add(BlockTypes.COAL_ORE.getDefaultState(), 10);
+                editSession.setBlocks(region, pattern);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else if (m.equalsIgnoreCase("E")) {
+            World world = BukkitAdapter.adapt(Bukkit.getWorld("mines"));
+            BlockVector3 pos1 = BlockVector3.at(-1139, 22, -1263);
+            BlockVector3 pos2 = BlockVector3.at(-1163, 8, -1287);
+            CuboidRegion region = new CuboidRegion(world, pos1, pos2);
+            try (EditSession editSession = WorldEdit.getInstance().newEditSession(world)) {
+                RandomPattern pattern = new RandomPattern();
+                pattern.add(BlockTypes.STONE.getDefaultState(), 70);
+                pattern.add(BlockTypes.CRACKED_STONE_BRICKS.getDefaultState(), 20);
+                pattern.add(BlockTypes.COAL_ORE.getDefaultState(), 5);
+                editSession.setBlocks(region, pattern);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else if (m.equalsIgnoreCase("F")) {
+            World world = BukkitAdapter.adapt(Bukkit.getWorld("mines"));
+            BlockVector3 pos1 = BlockVector3.at(-1223, 22, -1287);
+            BlockVector3 pos2 = BlockVector3.at(-1199, 8, -1263);
+            CuboidRegion region = new CuboidRegion(world, pos1, pos2);
+            try (EditSession editSession = WorldEdit.getInstance().newEditSession(world)) {
+                RandomPattern pattern = new RandomPattern();
+                pattern.add(BlockTypes.STONE.getDefaultState(), 60);
+                pattern.add(BlockTypes.CRACKED_STONE_BRICKS.getDefaultState(), 25);
+                pattern.add(BlockTypes.COAL_ORE.getDefaultState(), 15);
+                editSession.setBlocks(region, pattern);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else if (m.equalsIgnoreCase("G")) {
+            World world = BukkitAdapter.adapt(Bukkit.getWorld("mines"));
+            BlockVector3 pos1 = BlockVector3.at(-1199, 8, -1344);
+            BlockVector3 pos2 = BlockVector3.at(-1223, 22, -1368);
+            CuboidRegion region = new CuboidRegion(world, pos1, pos2);
+            try (EditSession editSession = WorldEdit.getInstance().newEditSession(world)) {
+                RandomPattern pattern = new RandomPattern();
+                pattern.add(BlockTypes.STONE.getDefaultState(), 50);
+                pattern.add(BlockTypes.CRACKED_STONE_BRICKS.getDefaultState(), 30);
+                pattern.add(BlockTypes.COAL_ORE.getDefaultState(), 20);
+                editSession.setBlocks(region, pattern);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else if (m.equalsIgnoreCase("H")) {
+            World world = BukkitAdapter.adapt(Bukkit.getWorld("mines"));
+            BlockVector3 pos1 = BlockVector3.at(-1283, 8, -1206);
+            BlockVector3 pos2 = BlockVector3.at(-1223, 22, -1368);
+            CuboidRegion region = new CuboidRegion(world, pos1, pos2);
+            try (EditSession editSession = WorldEdit.getInstance().newEditSession(world)) {
+                RandomPattern pattern = new RandomPattern();
+                pattern.add(BlockTypes.STONE.getDefaultState(), 40);
+                pattern.add(BlockTypes.CRACKED_STONE_BRICKS.getDefaultState(), 35);
+                pattern.add(BlockTypes.COAL_ORE.getDefaultState(), 25);
+                editSession.setBlocks(region, pattern);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else if (m.equalsIgnoreCase("I")) {
+            World world = BukkitAdapter.adapt(Bukkit.getWorld("mines"));
+            BlockVector3 pos1 = BlockVector3.at(-1283, 22, -1344);
+            BlockVector3 pos2 = BlockVector3.at(-1259, 8, -1368);
+            CuboidRegion region = new CuboidRegion(world, pos1, pos2);
+            try (EditSession editSession = WorldEdit.getInstance().newEditSession(world)) {
+                RandomPattern pattern = new RandomPattern();
+                pattern.add(BlockTypes.STONE.getDefaultState(), 20);
+                pattern.add(BlockTypes.CRACKED_STONE_BRICKS.getDefaultState(), 50);
+                pattern.add(BlockTypes.COAL_ORE.getDefaultState(), 30);
+            }
         }
     }
 }
+

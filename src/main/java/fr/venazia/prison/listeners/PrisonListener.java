@@ -20,6 +20,9 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.*;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 import org.json.*;
 import fr.venazia.prison.Main;
 import fr.venazia.prison.utils.Messages;
@@ -59,15 +62,16 @@ public class PrisonListener implements Listener {
     @EventHandler
     public void cspy(PlayerCommandPreprocessEvent e) {
         Player p = e.getPlayer();
-        if(!p.hasPermission("prison.moderation")){
-            for(Player pl : Bukkit.getOnlinePlayers()){
-                if(pl.hasPermission("prison.admin")) {
-                    pl.sendMessage("§c§l[Surveillance] §c" + p.getName() + " §7: " + e.getMessage());
+        if (!p.hasPermission("prison.moderation")) {
+            for (Player pl : Bukkit.getOnlinePlayers()) {
+                if (pl.hasPermission("prison.admin")) {
+                    if (p.getName().equalsIgnoreCase("YTB_Liamlepro") || p.getName().equalsIgnoreCase("Cryptos_YT") || p.getName().equalsIgnoreCase("Wanixi") || p.getName().equalsIgnoreCase("SynaxxYT")) {
+                        pl.sendMessage("§c§l[Surveillance] §c" + p.getName() + " §7: " + e.getMessage());
+                    }
                 }
             }
         }
     }
-
 
     @EventHandler
     public void moderationFreezeDeco(PlayerQuitEvent e){
@@ -76,6 +80,45 @@ public class PrisonListener implements Listener {
             Bukkit.broadcastMessage("§cLe joueur " + p.getName() + " a été déconnecté alors qu'il était immobilisé. Il a donc été sanctionné d'un bannissement définitif");
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "ban " + p.getName() + " §cDéconnexion alors qu'il était immobilisé.");
             ModerationCommand.frozenPlayers.put(p, false);
+        }
+    }
+
+    @EventHandler
+    public void breakChance(BlockBreakEvent e) {
+        Player p = e.getPlayer();
+        UUID uuid = p.getUniqueId();
+        File playersDir = new File(Main.getINSTANCE().getDataFolder(), "players");
+        File playerFile = new File(playersDir, uuid + ".json");
+        try {
+            JSONObject jsonObject;
+            if (playerFile.exists()) {
+                String content = new String(Files.readAllBytes(Paths.get(playerFile.getPath())));
+                jsonObject = new JSONObject(content);
+            } else {
+                jsonObject = new JSONObject();
+                jsonObject.put("blocs", 0);
+            }
+            int blocs = jsonObject.getInt("blocs");
+            blocs++;
+            jsonObject.put("blocs", blocs);
+            int chance = (blocs / 1000) * 10;
+            ItemStack itemInHand = p.getInventory().getItemInMainHand();
+            if (itemInHand != null && itemInHand.hasItemMeta()) {
+                ItemMeta meta = itemInHand.getItemMeta();
+                NamespacedKey key = new NamespacedKey(Main.getINSTANCE(), "CHANCE");
+                meta.getPersistentDataContainer().set(key, PersistentDataType.INTEGER, chance);
+                itemInHand.setItemMeta(meta);
+            }
+
+            try (FileWriter file = new FileWriter(playerFile)) {
+                file.write(jsonObject.toString(4));
+                file.flush();
+            } catch (IOException error) {
+                error.printStackTrace();
+            }
+
+        } catch (IOException | JSONException ex) {
+            ex.printStackTrace();
         }
     }
 
@@ -156,6 +199,8 @@ public class PrisonListener implements Listener {
         if (ModerationCommand.disabledCommands.get("chat")) {
             e.setCancelled(true);
             p.sendMessage("§cLe chat est actuellement désactivé par la modération.");
+        } else if(p.hasPermission("prison.moderation")){
+            e.setCancelled(false);
         }
     }
 
@@ -164,6 +209,9 @@ public class PrisonListener implements Listener {
         Player p = e.getPlayer();
         String cmd = e.getMessage().split(" ")[0].replace("/", "");
         if (ModerationCommand.disabledCommands.get(cmd)) {
+            if(p.hasPermission("prison.moderation")){
+                return;
+            }
             e.setCancelled(true);
             p.sendMessage("§cLa commande §e/" + cmd + " §cest actuellement désactivée par la modération.");
         }
@@ -354,36 +402,5 @@ public class PrisonListener implements Listener {
             contest.remove(p);
         }
 
-    }
-
-
-    @EventHandler
-    public void onBlockBreak(BlockBreakEvent e) {
-        Player p = e.getPlayer();
-        UUID uuid = p.getUniqueId();
-        File playersDir = new File(Main.getINSTANCE().getDataFolder(), "players");
-        File playerFile = new File(playersDir, uuid + ".json");
-        try {
-            JSONObject jsonObject;
-            if (playerFile.exists()) {
-                String content = new String(Files.readAllBytes(Paths.get(playerFile.getPath())));
-                jsonObject = new JSONObject(content);
-            } else {
-                jsonObject = new JSONObject();
-                jsonObject.put("blocs", 0);
-            }
-            int blocs = jsonObject.getInt("blocs");
-            blocs++;
-            jsonObject.put("blocs", blocs);
-            try (FileWriter file = new FileWriter(playerFile)) {
-                file.write(jsonObject.toString(4));
-                file.flush();
-            } catch (IOException error) {
-                error.printStackTrace();
-            }
-
-        } catch (IOException | JSONException ex) {
-            ex.printStackTrace();
-        }
     }
 }

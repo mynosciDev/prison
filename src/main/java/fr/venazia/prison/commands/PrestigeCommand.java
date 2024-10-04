@@ -49,7 +49,7 @@ public class PrestigeCommand implements CommandExecutor {
                 return true;
             }
             try {
-                money = Integer.valueOf(money.toString());
+                money = Double.parseDouble(money.toString());
                 price = Integer.valueOf(price.toString());
             } catch (NumberFormatException e) {
                 Messages.sendMessage(p, "&8[&dPrestiges&8] &cErreur lors de la récupération des données de prestige ! Veuillez contacter un administrateur. NULL_AT_TRY (GetPrix) ORDRE_GETPRIX");

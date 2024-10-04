@@ -7,6 +7,10 @@ depends: [ WorldEdit ]
 softdepends:
     - PlaceholderAPI
 commands:
+    chance:
+        description: Commande pour voir la chance
+        usage: /chance
+        aliases: [prisonchance, chances]
     darkmarket:
         description: NPC pour le marché noir
     acceptquest:
