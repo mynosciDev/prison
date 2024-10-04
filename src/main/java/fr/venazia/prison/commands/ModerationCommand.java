@@ -3,12 +3,69 @@ package fr.venazia.prison.commands;
 import org.bukkit.entity.Player;
 import revxrsal.commands.annotation.Command;
 import revxrsal.commands.bukkit.actor.BukkitCommandActor;
+import revxrsal.commands.bukkit.annotation.CommandPermission;
 
 import java.util.HashMap;
 
 public class ModerationCommand {
 
     public static HashMap<Player, Boolean> frozenPlayers = new HashMap<>();
+
+    public static HashMap<String, Boolean> disabledCommands = new HashMap<>();
+
+
+    @Command("disablecommand")
+    @CommandPermission("prison.moderation")
+    public void disableCommand(BukkitCommandActor actor, String command) {
+        if (actor.isPlayer()) {
+            Player p = actor.asPlayer();
+            if (disabledCommands.containsValue(command)) {
+                disabledCommands.put(command, true);
+                p.sendMessage("§aLa commande " + command + " est désormais désactivée.");
+            } else {
+                disabledCommands.put(command, false);
+                p.sendMessage("§aLa commande " + command + " a été réactivée.");
+            }
+        }
+    }
+
+
+    @Command("lockchat")
+    @CommandPermission("prison.moderation")
+    public void lockChat(BukkitCommandActor actor) {
+        if (actor.isPlayer()) {
+            Player p = actor.asPlayer();
+            if (disabledCommands.containsValue("chat")) {
+                disabledCommands.put("chat", true);
+                p.sendMessage("§aLe chat a été désactivé.");
+            } else {
+                disabledCommands.put("chat", false);
+                p.sendMessage("§aLe chat a été réactivé.");
+            }
+        }
+    }
+
+
+    @Command(
+            "fly"
+    )
+    public void flyCmd(BukkitCommandActor actor) {
+        if(actor.isPlayer()){
+            Player p = actor.asPlayer();
+            if(p.hasPermission("prison.moderation")){
+                if(p.getAllowFlight()){
+                    p.setAllowFlight(false);
+                    p.sendMessage("§aLe vol a été désactivé.");
+                } else {
+                    p.setAllowFlight(true);
+                    p.sendMessage("§aLe vol a été activé.");
+                }
+            } else {
+                p.sendMessage("§cVous n'avez pas la permission d'effectuer cette commande.");
+            }
+        }
+    }
+
 
     @Command(
             {"immo", "freeze"}
@@ -73,5 +130,7 @@ public class ModerationCommand {
             }
         }
     }
+
+
 
 }

@@ -151,6 +151,25 @@ public class PrisonListener implements Listener {
 
 
     @EventHandler
+    public void checkChatLocked(AsyncPlayerChatEvent e) {
+        Player p = e.getPlayer();
+        if (ModerationCommand.disabledCommands.get("chat")) {
+            e.setCancelled(true);
+            p.sendMessage("§cLe chat est actuellement désactivé par la modération.");
+        }
+    }
+
+    @EventHandler
+    public void checkIfCmdIsDisabled(PlayerCommandPreprocessEvent e) {
+        Player p = e.getPlayer();
+        String cmd = e.getMessage().split(" ")[0].replace("/", "");
+        if (ModerationCommand.disabledCommands.get(cmd)) {
+            e.setCancelled(true);
+            p.sendMessage("§cLa commande §e/" + cmd + " §cest actuellement désactivée par la modération.");
+        }
+    }
+
+    @EventHandler
     public void onSignChange(SignChangeEvent e) {
         Player p = e.getPlayer();
         UUID uuid = p.getUniqueId();
