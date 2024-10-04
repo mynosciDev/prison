@@ -1,5 +1,3 @@
-# Ce workflow construit un package avec Maven et le publie sur GitHub Packages lors de la création d'une release
-# Pour plus d'informations, voir : https://github.com/actions/setup-java/blob/main/docs/advanced-usage.md#apache-maven-with-a-settings-path
 
 name: Vérification et upload
 
