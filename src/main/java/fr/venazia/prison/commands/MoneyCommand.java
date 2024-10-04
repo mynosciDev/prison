@@ -22,29 +22,19 @@ public class MoneyCommand implements CommandExecutor {
         double money = 0;
 
         if (strings.length == 0) {
-            try {
-                money = Integer.parseInt(String.valueOf(DataUtils.readValue("money", p.getUniqueId().toString())));
-                p.sendMessage("§x§7§8§F§B§0§5§lM§x§7§3§F§C§0§D§lo§x§6§E§F§C§1§6§ln§x§6§9§F§D§1§E§ln§x§6§4§F§D§2§7§la§x§5§F§F§E§2§F§li§x§5§A§F§E§3§8§le §x§5§5§F§F§4§0§l» §eVous possédez actuellement §b" + money + "§e€ !");
-            } catch (IOException e) {
-                p.sendMessage("§cUne erreur s'est produite : " + e.getMessage());
-                e.printStackTrace();
-            }
+            money = Integer.parseInt(String.valueOf(DataUtils.readValue("money", p.getUniqueId().toString())));
+            p.sendMessage("§x§7§8§F§B§0§5§lM§x§7§3§F§C§0§D§lo§x§6§E§F§C§1§6§ln§x§6§9§F§D§1§E§ln§x§6§4§F§D§2§7§la§x§5§F§F§E§2§F§li§x§5§A§F§E§3§8§le §x§5§5§F§F§4§0§l» §eVous possédez actuellement §b" + money + "§e€ !");
             return true;
         }
 
         if (strings.length == 1) {
             String get = strings[0];
-            try {
-                String moneyString = DataUtils.readValue("money", get).toString();
-                if (moneyString != null) {
-                    money = Integer.parseInt(moneyString);
-                    p.sendMessage("§x§7§8§F§B§0§5§lM§x§7§3§F§C§0§D§lo§x§6§E§F§C§1§6§ln§x§6§9§F§D§1§E§ln§x§6§4§F§D§2§7§la§x§5§F§F§E§2§F§li§x§5§A§F§E§3§8§le §x§5§5§F§F§4§0§l» §eLe joueur §b" + get + " §epossède actuellement §b" + money + "§e€ !");
-                } else {
-                    p.sendMessage("§cLe joueur §b" + get + " §cn'existe pas !");
-                }
-            } catch (IOException e) {
-                p.sendMessage("§cUne erreur s'est produite : " + e.getMessage());
-                e.printStackTrace();
+            String moneyString = DataUtils.readValue("money", get).toString();
+            if (moneyString != null) {
+                money = Integer.parseInt(moneyString);
+                p.sendMessage("§x§7§8§F§B§0§5§lM§x§7§3§F§C§0§D§lo§x§6§E§F§C§1§6§ln§x§6§9§F§D§1§E§ln§x§6§4§F§D§2§7§la§x§5§F§F§E§2§F§li§x§5§A§F§E§3§8§le §x§5§5§F§F§4§0§l» §eLe joueur §b" + get + " §epossède actuellement §b" + money + "§e€ !");
+            } else {
+                p.sendMessage("§cLe joueur §b" + get + " §cn'existe pas !");
             }
             return true;
         }
@@ -58,16 +48,11 @@ public class MoneyCommand implements CommandExecutor {
             }
 
             if (strings[1].equalsIgnoreCase("add")) {
-                try {
-                    money = Integer.parseInt(String.valueOf(DataUtils.readValue("money", p2.getUniqueId().toString())));
-                    double add = Integer.parseInt(strings[2]);
-                    DataUtils.writeValue("money", p2.getUniqueId().toString(), String.valueOf(money + add));
-                    p.sendMessage("§x§7§8§F§B§0§5§lM§x§7§3§F§C§0§D§lo§x§6§E§F§C§1§6§ln§x§6§9§F§D§1§E§ln§x§6§4§F§D§2§7§la§x§5§F§F§E§2§F§li§x§5§A§F§E§3§8§le §x§5§5§F§F§4§0§l» §eVous avez ajouté §b" + add + "§e€ à §b" + get + "§e !");
-                    p2.sendMessage("§x§7§8§F§B§0§5§lM§x§7§3§F§C§0§D§lo§x§6§E§F§C§1§6§ln§x§6§9§F§D§1§E§ln§x§6§4§F§D§2§7§la§x§5§F§F§E§2§F§li§x§5§A§F§E§3§8§le §x§5§5§F§F§4§0§l» §eVous avez reçu §b" + add + "§e€ de §b" + p.getName() + "§e !");
-                } catch (IOException e) {
-                    p.sendMessage("§cUne erreur s'est produite : " + e.getMessage());
-                    e.printStackTrace();
-                }
+                money = Integer.parseInt(String.valueOf(DataUtils.readValue("money", p2.getUniqueId().toString())));
+                double add = Integer.parseInt(strings[2]);
+                DataUtils.writeValue("money", p2.getUniqueId().toString(), String.valueOf(money + add));
+                p.sendMessage("§x§7§8§F§B§0§5§lM§x§7§3§F§C§0§D§lo§x§6§E§F§C§1§6§ln§x§6§9§F§D§1§E§ln§x§6§4§F§D§2§7§la§x§5§F§F§E§2§F§li§x§5§A§F§E§3§8§le §x§5§5§F§F§4§0§l» §eVous avez ajouté §b" + add + "§e€ à §b" + get + "§e !");
+                p2.sendMessage("§x§7§8§F§B§0§5§lM§x§7§3§F§C§0§D§lo§x§6§E§F§C§1§6§ln§x§6§9§F§D§1§E§ln§x§6§4§F§D§2§7§la§x§5§F§F§E§2§F§li§x§5§A§F§E§3§8§le §x§5§5§F§F§4§0§l» §eVous avez reçu §b" + add + "§e€ de §b" + p.getName() + "§e !");
                 return true;
             }
         }

@@ -38,34 +38,28 @@ public class LookupCommand implements CommandExecutor {
             return true;
         }
 
-        try {
-            String mine = DataUtils.readValue("mine", p2.getUniqueId().toString()).toString();
-            String money = DataUtils.readValue("money", p2.getUniqueId().toString()).toString();
-            String prestige = DataUtils.readValue("prestige", p2.getUniqueId().toString()).toString();
-            String blocs = DataUtils.readValue("blocs", p2.getUniqueId().toString()).toString();
+        String mine = DataUtils.readValue("mine", p2.getUniqueId().toString()).toString();
+        String money = DataUtils.readValue("money", p2.getUniqueId().toString()).toString();
+        String prestige = DataUtils.readValue("prestige", p2.getUniqueId().toString()).toString();
+        String blocs = DataUtils.readValue("blocs", p2.getUniqueId().toString()).toString();
 
-            p.sendMessage("§8[§6Lookup§8] §eLookup de §7" + p2.getName());
-            p.sendMessage("§8§m----------------------------------------");
-            p.sendMessage("§7Nom: §e" + p2.getName());
-            p.sendMessage("§7UUID: §e" + p2.getUniqueId());
-            if (p.hasPermission("admin")) {
-                p.sendMessage("§7IP: §e" + p2.getAddress().getAddress());
-            }
-            p.sendMessage("§7Mode de jeu: §e" + p2.getGameMode());
-            p.sendMessage("§7Position: §e" + p2.getLocation().getBlockX() + " " + p2.getLocation().getBlockY() + " " + p2.getLocation().getBlockZ());
-            p.sendMessage("§7Monde: §e" + p2.getWorld().getName());
-            p.sendMessage("§7Connecté depuis: §e" + p2.getFirstPlayed());
-            p.sendMessage("§7Dernière connexion: §e" + p2.getLastPlayed());
-            p.sendMessage("§7Mine: §e" + mine);
-            p.sendMessage("§7Argent: §e" + money);
-            p.sendMessage("§7Prestige: §e" + prestige);
-            p.sendMessage("§7Blocs minés: §e" + blocs);
-            p.sendMessage("§8§m----------------------------------------");
-        } catch (IOException e) {
-            Messages.sendMessage(p, "&8[&6Lookup&8] &cUne erreur s'est produite lors de la récupération des données.");
-            e.printStackTrace();
+        p.sendMessage("§8[§6Lookup§8] §eLookup de §7" + p2.getName());
+        p.sendMessage("§8§m----------------------------------------");
+        p.sendMessage("§7Nom: §e" + p2.getName());
+        p.sendMessage("§7UUID: §e" + p2.getUniqueId());
+        if (p.hasPermission("admin")) {
+            p.sendMessage("§7IP: §e" + p2.getAddress().getAddress());
         }
-
+        p.sendMessage("§7Mode de jeu: §e" + p2.getGameMode());
+        p.sendMessage("§7Position: §e" + p2.getLocation().getBlockX() + " " + p2.getLocation().getBlockY() + " " + p2.getLocation().getBlockZ());
+        p.sendMessage("§7Monde: §e" + p2.getWorld().getName());
+        p.sendMessage("§7Connecté depuis: §e" + p2.getFirstPlayed());
+        p.sendMessage("§7Dernière connexion: §e" + p2.getLastPlayed());
+        p.sendMessage("§7Mine: §e" + mine);
+        p.sendMessage("§7Argent: §e" + money);
+        p.sendMessage("§7Prestige: §e" + prestige);
+        p.sendMessage("§7Blocs minés: §e" + blocs);
+        p.sendMessage("§8§m----------------------------------------");
         return true;
     }
 }

@@ -5,8 +5,7 @@ public class QuestUtils {
      * Quest
      */
     public static void regQuests() {
-        //TODO: Add quests
-        //reg quetes Bvn
+        //Remplacé dans un nouveau plugin (Quetes)
     }
 
 }

@@ -37,7 +37,7 @@ public class DataUtils {
 
 
 
-    public static Object readValue(String key, String uuid) throws IOException {
+    public static Object readValue(String key, String uuid)  {
         File playersDir = new File(Main.getINSTANCE().getDataFolder(), "players");
         File playerFile = new File(playersDir, uuid + ".json");
         try {
@@ -48,7 +48,11 @@ public class DataUtils {
                 return jsonObject.get(key);
             }
         } catch (IOException e) {
-            throw new IOException(e);
+            try {
+                throw new IOException(e);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
         }
         return null;
     }
@@ -179,7 +183,7 @@ public class DataUtils {
     }
 
 
-    public static void writeValue(String key, String uuid, String value) throws IOException {
+    public static void writeValue(String key, String uuid, String value) {
         File playersDir = new File(Main.getINSTANCE().getDataFolder(), "players");
         File playerFile = new File(playersDir, uuid + ".json");
         try {
@@ -194,11 +198,11 @@ public class DataUtils {
             try (FileWriter file = new FileWriter(playerFile)) {
                 file.write(jsonObject.toString(4));
                 file.flush();
-            } catch (IOException error) {
-                throw new IOException(error);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         } catch (IOException e) {
-            throw new IOException(e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -220,7 +224,7 @@ public class DataUtils {
         return null;
     }
 
-    public static Object readMineValue(String mine, String key) throws IOException {
+    public static Object readMineValue(String mine, String key) {
         File playersDir = new File(Main.getINSTANCE().getDataFolder(), "mine");
         File playerFile = new File(playersDir, mine + ".json");
         try {
@@ -231,7 +235,11 @@ public class DataUtils {
                 return jsonObject.get(key);
             }
         } catch (IOException e) {
-            throw new IOException(e);
+            try {
+                throw new IOException(e);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
         }
         return null;
     }
