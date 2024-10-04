@@ -91,6 +91,10 @@ public final class Main extends JavaPlugin {
         warpManager.addWarp("f", new Location(mines, -1211, 24, -1256));
         warpManager.addWarp("g", new Location(mines, -1211, 23, -1339));
         warpManager.addWarp("h", new Location(mines, -1255, 23, -1194));
+        warpManager.addWarp("j", new Location(mines, -1081, 24, -869));
+        warpManager.addWarp("i", new Location(mines, -1363, 23, -931));
+        warpManager.addWarp("k", new Location(mines, -1196, 25, -874));
+        warpManager.addWarp("l", new Location(mines, -1211, 23, -1017));
         //Reg Placeholders
         new Placeholders(this).register();
     }
