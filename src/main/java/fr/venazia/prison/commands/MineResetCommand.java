@@ -246,8 +246,6 @@ public class MineResetCommand implements CommandExecutor {
                 pattern.add(BlockTypes.CRACKED_STONE_BRICKS.getDefaultState(), 60);
                 pattern.add(BlockTypes.COAL_ORE.getDefaultState(), 35);
             }
-        } else if(m.equalsIgnoreCase("Q")) {
-            World world = BukkitAdapter.adapt(Bukkit
         }
     }
 }
