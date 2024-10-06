@@ -76,12 +76,12 @@
         <dependency>
             <groupId>io.github.revxrsal</groupId>
             <artifactId>lamp.common</artifactId>
-            <version>4.0.0-beta.11</version>
+            <version>4.0.0-beta.17</version>
         </dependency>
         <dependency>
             <groupId>io.github.revxrsal</groupId>
             <artifactId>lamp.bukkit</artifactId>
-            <version>4.0.0-beta.11</version>
+            <version>4.0.0-beta.17</version>
         </dependency>
         <dependency>
             <groupId>net.kyori</groupId>
@@ -96,7 +96,7 @@
         <dependency>
             <groupId>com.bgsoftware</groupId>
             <artifactId>SuperiorSkyblockAPI</artifactId>
-            <version>2024.2</version>
+            <version>2024.3</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

@@ -21,10 +21,7 @@ commands:
     prestige:
         description: Commande pour monter de prestige
         usage: /prestige
-        permission: prison.prestige
         aliases: [prisonprestige, pr, prestige]
-    is:
-        description: Commande pour voir les informations de ton île
     permile:
         description: Commande pour voir les permissions de ton île
     market:
@@ -84,7 +81,6 @@ commands:
     rankup:
         description: Commande pour monter de grade
         usage: /rankup
-        permission: prison.rankup
         aliases: [prisonrankup, ru, prisonup, up]
     minereset:
         description: Commande pour reset une mine
@@ -94,7 +90,6 @@ commands:
     blocksbroken:
         description: Commande pour voir le nombre de blocs cassés
         usage: /blocks
-        permission: prison.blocksbroken
         aliases: [prisonblocksbroken, blocksb, bb]
     prison:
         description: Commande principale du plugin Prison

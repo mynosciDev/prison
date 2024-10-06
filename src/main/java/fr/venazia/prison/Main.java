@@ -9,6 +9,7 @@ import fr.venazia.prison.commands.*;
 import fr.venazia.prison.listeners.PrisonListener;
 import fr.venazia.prison.utils.KitManager;
 import fr.venazia.prison.utils.Placeholders;
+import fr.venazia.prison.utils.TabListUpdater;
 import fr.venazia.prison.utils.WarpManager;
 import fr.venazia.prison.warps.Warp;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
@@ -45,10 +46,12 @@ public final class Main extends JavaPlugin {
         return kitManager;
     }
 
+
+
+
     @Override
     public void onEnable() {
         this.adventure = BukkitAudiences.create(this);
-        this.warpManager = new WarpManager();
         logger = new PluginLogger(this);
         logger.info("Démarrage du plugin");
         INSTANCE = this;
@@ -57,12 +60,15 @@ public final class Main extends JavaPlugin {
         kitManager.loadKits();
         regCommands();
         regListeners();
+        this.warpManager = new WarpManager();
         regOthers();
         Bukkit.broadcastMessage("Prison loading completed !");
         //Reg Tasks
-
         //new RegionsTask(this).runTaskTimer(this, 0, 20);
+        TabListUpdater.startTabListUpdater();
     }
+
+
 
     public WarpManager getWarpManager() {
         return warpManager;
@@ -77,24 +83,6 @@ public final class Main extends JavaPlugin {
 
     public void regOthers() {
         // Reg Warps
-        World divers = Bukkit.getWorld("divers");
-        World mines = Bukkit.getWorld("mines");
-        World pvp = Bukkit.getWorld("pvp");
-        warpManager.addWarp("a", new Location(mines, -1070, 23, -1275));
-        warpManager.addWarp("b", new Location(mines, -1075, 23, -1195));
-        warpManager.addWarp("tuto", new Location(divers,  458, 114, 1198));
-        warpManager.addWarp("mines", new Location(mines, -1073, 23, -1275));
-        warpManager.addWarp("pvp", new Location(pvp, 84, -9, 3));
-        warpManager.addWarp("c", new Location(mines, -1106, 23, -1356));
-        warpManager.addWarp("d", new Location(mines, -1140, 23, -1376));
-        warpManager.addWarp("e", new Location(mines, -1151, 23, -1259));
-        warpManager.addWarp("f", new Location(mines, -1211, 24, -1256));
-        warpManager.addWarp("g", new Location(mines, -1211, 23, -1339));
-        warpManager.addWarp("h", new Location(mines, -1255, 23, -1194));
-        warpManager.addWarp("j", new Location(mines, -1081, 24, -869));
-        warpManager.addWarp("i", new Location(mines, -1363, 23, -931));
-        warpManager.addWarp("k", new Location(mines, -1196, 25, -874));
-        warpManager.addWarp("l", new Location(mines, -1211, 23, -1017));
         //Reg Placeholders
         new Placeholders(this).register();
     }
@@ -102,14 +90,14 @@ public final class Main extends JavaPlugin {
 
     public void regCommands() {
         Lamp<BukkitCommandActor> b = BukkitLamp.builder(this).build();
-        b.register(new ModerationCommand(), new BugCommand(), new SellCommands(), new EventCommand());
+        b.register(new ModerationCommand(), new BugCommand(), new SellCommands(), new EventCommand(), new Challenges());
         getCommand("permile").setExecutor(new UtilsCommand());
         getCommand("acceptquest").setExecutor(new AcceptQuestCommand());
         getCommand("darkmarket").setExecutor(new DarkMarketCommand());
         getCommand("prestige").setExecutor(new PrestigeCommand());
         getCommand("market").setExecutor(new MarketCommand());
         getCommand("voyages").setExecutor(new VoyageCommand());
-        getCommand("warp").setExecutor(new WarpCommand(getWarpManager()));
+        getCommand("warp").setExecutor(new WarpCommand());
         getCommand("god").setExecutor(new GodCommand());
         kitManager = new KitManager(this);
         getCommand("createkit").setExecutor(new CreateKitCommand(getKitManager()));

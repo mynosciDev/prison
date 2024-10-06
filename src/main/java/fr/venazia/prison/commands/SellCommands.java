@@ -22,6 +22,20 @@ public class SellCommands {
         ITEM_PRICES.put(Material.STONE, 15.0);
         ITEM_PRICES.put(Material.COBBLESTONE, 10.0);
         ITEM_PRICES.put(Material.DIAMOND_ORE, 850.0);
+        ITEM_PRICES.put(Material.COAL_ORE, 30.0);
+        ITEM_PRICES.put(Material.REDSTONE_ORE, 50.0);
+        ITEM_PRICES.put(Material.LAPIS_ORE, 40.0);
+        ITEM_PRICES.put(Material.NETHER_QUARTZ_ORE, 25.0);
+        ITEM_PRICES.put(Material.GOLD_INGOT, 200.0);
+        ITEM_PRICES.put(Material.EMERALD, 7000.0);
+        ITEM_PRICES.put(Material.IRON_INGOT, 80.0);
+        ITEM_PRICES.put(Material.DIAMOND, 900.0);
+        ITEM_PRICES.put(Material.COAL, 35.0);
+        ITEM_PRICES.put(Material.REDSTONE, 55.0);
+        ITEM_PRICES.put(Material.LAPIS_LAZULI, 45.0);
+        ITEM_PRICES.put(Material.QUARTZ, 30.0);
+        ITEM_PRICES.put(Material.STONE_BRICKS, 20.0);
+        ITEM_PRICES.put(Material.CRACKED_STONE_BRICKS, 10.0);
     }
 
 

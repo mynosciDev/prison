@@ -48,15 +48,32 @@ public class MoneyCommand implements CommandExecutor {
             }
 
             if (strings[1].equalsIgnoreCase("add")) {
-                money = Integer.parseInt(String.valueOf(DataUtils.readValue("money", p2.getUniqueId().toString())));
+                money = Double.parseDouble(String.valueOf(DataUtils.readValue("money", p2.getUniqueId().toString())));
                 double add = Integer.parseInt(strings[2]);
                 DataUtils.writeValue("money", p2.getUniqueId().toString(), String.valueOf(money + add));
                 p.sendMessage("§x§7§8§F§B§0§5§lM§x§7§3§F§C§0§D§lo§x§6§E§F§C§1§6§ln§x§6§9§F§D§1§E§ln§x§6§4§F§D§2§7§la§x§5§F§F§E§2§F§li§x§5§A§F§E§3§8§le §x§5§5§F§F§4§0§l» §eVous avez ajouté §b" + add + "§e€ à §b" + get + "§e !");
                 p2.sendMessage("§x§7§8§F§B§0§5§lM§x§7§3§F§C§0§D§lo§x§6§E§F§C§1§6§ln§x§6§9§F§D§1§E§ln§x§6§4§F§D§2§7§la§x§5§F§F§E§2§F§li§x§5§A§F§E§3§8§le §x§5§5§F§F§4§0§l» §eVous avez reçu §b" + add + "§e€ de §b" + p.getName() + "§e !");
                 return true;
             }
+            if(strings[1].equalsIgnoreCase("remove")) {
+                money = Double.parseDouble(String.valueOf(DataUtils.readValue("money", p2.getUniqueId().toString())));
+                double remove = Integer.parseInt(strings[2]);
+                DataUtils.writeValue("money", p2.getUniqueId().toString(), String.valueOf(money - remove));
+                p.sendMessage("§x§7§8§F§B§0§5§lM§x§7§3§F§C§0§D§lo§x§6§E§F§C§1§6§ln§x§6§9§F§D§1§E§ln§x§6§4§F§D§2§7§la§x§5§F§F§E§2§F§li§x§5§A§F§E§3§8§le §x§5§5§F§F§4§0§l» §eVous avez retiré §b" + remove + "§e€ à §b" + get + "§e !");
+                p2.sendMessage("§x§7§8§F§B§0§5§lM§x§7§3§F§C§0§D§lo§x§6§E§F§C§1§6§ln§x§6§9§F§D§1§E§ln§x§6§4§F§D§2§7§la§x§5§F§F§E§2§F§li§x§5§A§F§E§3§8§le §x§5§5§F§F§4§0§l» §eVous avez perdu §b" + remove + "§e€ à §b" + p.getName() + "§e !");
+                return true;
+            }
+            if(strings[1].equalsIgnoreCase("set")) {
+                double set = Integer.parseInt(strings[2]);
+                DataUtils.writeValue("money", p2.getUniqueId().toString(), String.valueOf(set));
+                p.sendMessage("§x§7§8§F§B§0§5§lM§x§7§3§F§C§0§D§lo§x§6§E§F§C§1§6§ln§x§6§9§F§D§1§E§ln§x§6§4§F§D§2§7§la§x§5§F§F§E§2§F§li§x§5§A§F§E§3§8§le §x§5§5§F§F§4§0§l» §eVous avez défini §b" + get + "§e à §b" + set + "§e€ !");
+                p2.sendMessage("§x§7§8§F§B§0§5§lM§x§7§3§F§C§0§D§lo§x§6§E§F§C§1§6§ln§x§6§9§F§D§1§E§ln§x§6§4§F§D§2§7§la§x§5§F§F§E§2§F§li§x§5§A§F§E§3§8§le §x§5§5§F§F§4§0§l» §eVous avez été défini à §b" + set + "§e€ par §b" + p.getName() + "§e !");
+                return true;
+            }
         }
 
         return false;
     }
+
+
 }

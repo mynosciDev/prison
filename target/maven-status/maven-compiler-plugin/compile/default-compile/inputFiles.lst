@@ -2,6 +2,7 @@ C:\Users\mynosci\IdeaProjects\prison\src\main\java\fr\venazia\prison\commands\Ac
 C:\Users\mynosci\IdeaProjects\prison\src\main\java\fr\venazia\prison\commands\BlocksCommand.java
 C:\Users\mynosci\IdeaProjects\prison\src\main\java\fr\venazia\prison\commands\BroadcastCommand.java
 C:\Users\mynosci\IdeaProjects\prison\src\main\java\fr\venazia\prison\commands\BugCommand.java
+C:\Users\mynosci\IdeaProjects\prison\src\main\java\fr\venazia\prison\commands\Challenges.java
 C:\Users\mynosci\IdeaProjects\prison\src\main\java\fr\venazia\prison\commands\ChanceCommand.java
 C:\Users\mynosci\IdeaProjects\prison\src\main\java\fr\venazia\prison\commands\CreateKitCommand.java
 C:\Users\mynosci\IdeaProjects\prison\src\main\java\fr\venazia\prison\commands\DarkMarketCommand.java
@@ -26,10 +27,10 @@ C:\Users\mynosci\IdeaProjects\prison\src\main\java\fr\venazia\prison\commands\Vo
 C:\Users\mynosci\IdeaProjects\prison\src\main\java\fr\venazia\prison\commands\WarpCommand.java
 C:\Users\mynosci\IdeaProjects\prison\src\main\java\fr\venazia\prison\listeners\PrisonListener.java
 C:\Users\mynosci\IdeaProjects\prison\src\main\java\fr\venazia\prison\Main.java
-C:\Users\mynosci\IdeaProjects\prison\src\main\java\fr\venazia\prison\quest\QuestUtils.java
 C:\Users\mynosci\IdeaProjects\prison\src\main\java\fr\venazia\prison\utils\CommandUtils.java
 C:\Users\mynosci\IdeaProjects\prison\src\main\java\fr\venazia\prison\utils\DataUtils.java
 C:\Users\mynosci\IdeaProjects\prison\src\main\java\fr\venazia\prison\utils\DefaultFontInfo.java
+C:\Users\mynosci\IdeaProjects\prison\src\main\java\fr\venazia\prison\utils\ExceptionHandler.java
 C:\Users\mynosci\IdeaProjects\prison\src\main\java\fr\venazia\prison\utils\ItemBuilder.java
 C:\Users\mynosci\IdeaProjects\prison\src\main\java\fr\venazia\prison\utils\Kit.java
 C:\Users\mynosci\IdeaProjects\prison\src\main\java\fr\venazia\prison\utils\KitManager.java
@@ -37,5 +38,6 @@ C:\Users\mynosci\IdeaProjects\prison\src\main\java\fr\venazia\prison\utils\Marke
 C:\Users\mynosci\IdeaProjects\prison\src\main\java\fr\venazia\prison\utils\Messages.java
 C:\Users\mynosci\IdeaProjects\prison\src\main\java\fr\venazia\prison\utils\OptionalTypeAdapter.java
 C:\Users\mynosci\IdeaProjects\prison\src\main\java\fr\venazia\prison\utils\Placeholders.java
+C:\Users\mynosci\IdeaProjects\prison\src\main\java\fr\venazia\prison\utils\TabListUpdater.java
 C:\Users\mynosci\IdeaProjects\prison\src\main\java\fr\venazia\prison\utils\WarpManager.java
 C:\Users\mynosci\IdeaProjects\prison\src\main\java\fr\venazia\prison\warps\Warp.java

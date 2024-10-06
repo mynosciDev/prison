@@ -13,9 +13,7 @@ public class WarpManager {
 
     public void addWarp(String name, Location location) {
         warps.put(name, new Warp(name, location));
-        for(Player p : Bukkit.getOnlinePlayers()) {
-            p.sendMessage("§8[§aWarp§8] §aLe warp §6" + name + " §aa été enregistré.");
-        }
+        Bukkit.getConsoleSender().sendMessage("§aWarp §e" + name + " §aajouté.");
     }
 
     public Warp getWarp(String name) {

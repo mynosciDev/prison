@@ -7,11 +7,13 @@ fr\venazia\prison\commands\VoyageCommand.class
 fr\venazia\prison\Main.class
 fr\venazia\prison\utils\Messages.class
 fr\venazia\prison\commands\LookupCommand.class
-fr\venazia\prison\quest\QuestUtils.class
+fr\venazia\prison\utils\ExceptionHandler.class
 fr\venazia\prison\commands\BugCommand.class
+fr\venazia\prison\utils\TabListUpdater$1.class
 fr\venazia\prison\commands\MoneyCommand.class
 fr\venazia\prison\commands\CreateKitCommand.class
 fr\venazia\prison\commands\MarketCommand.class
+fr\venazia\prison\utils\TabListUpdater.class
 fr\venazia\prison\utils\KitManager$2.class
 fr\venazia\prison\listeners\PrisonListener.class
 fr\venazia\prison\commands\MineResetCommand.class
@@ -33,6 +35,7 @@ fr\venazia\prison\commands\ChanceCommand.class
 fr\venazia\prison\utils\ItemBuilder$Unsafe$ReflectionUtils.class
 fr\venazia\prison\utils\WarpManager.class
 fr\venazia\prison\commands\KitCommand.class
+fr\venazia\prison\commands\Challenges.class
 fr\venazia\prison\commands\ModerationCommand.class
 fr\venazia\prison\commands\ValueCommand$1.class
 fr\venazia\prison\commands\PrisonCommand.class

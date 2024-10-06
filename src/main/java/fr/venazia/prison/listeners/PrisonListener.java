@@ -8,6 +8,7 @@ import com.bgsoftware.superiorskyblock.api.island.Island;
 import fr.venazia.prison.commands.ModerationCommand;
 import fr.venazia.prison.utils.DataUtils;
 import fr.venazia.prison.utils.Placeholders;
+import fr.venazia.prison.utils.TabListUpdater;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.Component;
@@ -20,6 +21,8 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.*;
+import org.bukkit.event.server.ServerEvent;
+import org.bukkit.event.server.TabCompleteEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
@@ -37,9 +40,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 import static fr.venazia.prison.commands.StaffContesteCommand.contest;
 import static java.lang.Thread.sleep;
@@ -65,7 +66,7 @@ public class PrisonListener implements Listener {
         if (!p.hasPermission("prison.moderation")) {
             for (Player pl : Bukkit.getOnlinePlayers()) {
                 if (pl.hasPermission("prison.admin")) {
-                    if (p.getName().equalsIgnoreCase("YTB_Liamlepro") || p.getName().equalsIgnoreCase("Cryptos_YT") || p.getName().equalsIgnoreCase("Wanixi") || p.getName().equalsIgnoreCase("SynaxxYT")) {
+                    if (p.getName().equalsIgnoreCase("Laynox_YT") || p.getName().equalsIgnoreCase("Cryptos_YT") || p.getName().equalsIgnoreCase("Wanixi") || p.getName().equalsIgnoreCase("SynaxxYT")) {
                         pl.sendMessage("§c§l[Surveillance] §c" + p.getName() + " §7: " + e.getMessage());
                     }
                 }
@@ -154,16 +155,39 @@ public class PrisonListener implements Listener {
 
     }
 
+
+    @EventHandler
+    public void chat(AsyncPlayerChatEvent e){
+        Player p = e.getPlayer();
+        String message = e.getMessage();
+        e.setCancelled(true);
+        if(message.startsWith("#")){
+            if(!p.hasPermission("prison.moderation")){
+                return;
+            }
+            for(Player pl : Bukkit.getOnlinePlayers()){
+                if(pl.hasPermission("prison.moderation")) {
+                    pl.sendMessage("§7[§cStaff§7] §c" + p.getName() + " §8» §f" + message.replaceFirst("#", ""));
+                }
+            }
+            return;
+        }
+        String prefix = PlaceholderAPI.setPlaceholders(p, "%vault_prefix%");
+        prefix = prefix.replace("&", "§");
+        if(p.hasPermission("prison.admin")) {
+            boolean isStaff = true;
+        }
+        String[] badWords = {"fdp", "ntm", "connard", "salope", "pute", "enculé", "encule", "enculer", "enculée", "enculée", "enculés", "enculées", "bite", "ꐙ", "ꐚ", "ꐛ", "ꐜ", "ꐝ", "ꐘ", ""};
+        if(message.contains(Arrays.toString(badWords))) {
+            p.sendMessage("§cMerci de ne pas utiliser de mots vulgaires / dérangants.");
+            return;
+        }
+        Bukkit.broadcastMessage("§7" + prefix + p.getName() + " §8» §f" + message);
+    }
+
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
         Player p = e.getPlayer();
-        String header1 = "§#921BFB§lV§#9136FC§le§#9051FC§ln§#8F6DFD§la§#8E88FE§lz§#8DA3FE§li§#8CBEFF§la §r◆ §d%server_online% §fjoueurs connectés \n §7Serveur OP Prison Français - §b§lplay/mc.venazia.fr \n §7Grade: §r%vault_prefix% \n §7Tokens: §r%azlink_tokens%";
-        String footer1 = "§6§l✮ §eAchète des avantages en jeu: §7/f2w \n §6§l✮ §eAchète des avantages via la boutique: §7/boutique";
-        String footer = PlaceholderAPI.setPlaceholders(p, footer1);
-        String header = PlaceholderAPI.setPlaceholders(p, header1);
-        String header2 = ChatColor.translateAlternateColorCodes('&', header);
-        String footer2 = ChatColor.translateAlternateColorCodes('&', footer);
-        p.setPlayerListHeaderFooter(header2, footer2);
         if (!p.hasPlayedBefore()) {
             try {
                 firstQuest(p);
@@ -208,7 +232,7 @@ public class PrisonListener implements Listener {
     public void checkIfCmdIsDisabled(PlayerCommandPreprocessEvent e) {
         Player p = e.getPlayer();
         String cmd = e.getMessage().split(" ")[0].replace("/", "");
-        if (ModerationCommand.disabledCommands.get(cmd)) {
+        if (ModerationCommand.disabledCommands.get(cmd) != null) {
             if(p.hasPermission("prison.moderation")){
                 return;
             }
@@ -216,6 +240,7 @@ public class PrisonListener implements Listener {
             p.sendMessage("§cLa commande §e/" + cmd + " §cest actuellement désactivée par la modération.");
         }
     }
+
 
     @EventHandler
     public void onSignChange(SignChangeEvent e) {
@@ -304,6 +329,8 @@ public class PrisonListener implements Listener {
     }
 
 
+
+
     @EventHandler
     public void onBlockInteract(PlayerInteractEvent e) {
         Block b = e.getClickedBlock();
@@ -315,6 +342,8 @@ public class PrisonListener implements Listener {
             }
         }
     }
+
+
 
     private boolean findAndHandleSignAround(Block chestBlock, Player p) {
         int[][] offsets = {

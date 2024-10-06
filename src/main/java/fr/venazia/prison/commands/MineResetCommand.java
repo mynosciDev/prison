@@ -1,6 +1,7 @@
 package fr.venazia.prison.commands;
 
 import com.sk89q.worldedit.EditSession;
+import com.sk89q.worldedit.MaxChangedBlocksException;
 import com.sk89q.worldedit.WorldEdit;
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldedit.math.BlockVector3;
@@ -144,8 +145,8 @@ public class MineResetCommand implements CommandExecutor {
             }
         } else if (m.equalsIgnoreCase("H")) {
             World world = BukkitAdapter.adapt(Bukkit.getWorld("mines"));
-            BlockVector3 pos1 = BlockVector3.at(-1283, 8, -1206);
-            BlockVector3 pos2 = BlockVector3.at(-1223, 22, -1368);
+            BlockVector3 pos1 = BlockVector3.at(-1259, 22, -1182);
+            BlockVector3 pos2 = BlockVector3.at(-1283, 8, -1204);
             CuboidRegion region = new CuboidRegion(world, pos1, pos2);
             try (EditSession editSession = WorldEdit.getInstance().newEditSession(world)) {
                 RandomPattern pattern = new RandomPattern();
@@ -166,6 +167,12 @@ public class MineResetCommand implements CommandExecutor {
                 pattern.add(BlockTypes.STONE.getDefaultState(), 20);
                 pattern.add(BlockTypes.CRACKED_STONE_BRICKS.getDefaultState(), 50);
                 pattern.add(BlockTypes.COAL_ORE.getDefaultState(), 30);
+                try {
+                    editSession.setBlocks(region, pattern);
+                } catch (MaxChangedBlocksException e) {
+                    throw new RuntimeException(e);
+                }
+
             }
         } else if (m.equalsIgnoreCase("J")) {
             World world = BukkitAdapter.adapt(Bukkit.getWorld("mines"));
@@ -177,6 +184,12 @@ public class MineResetCommand implements CommandExecutor {
                 pattern.add(BlockTypes.STONE.getDefaultState(), 10);
                 pattern.add(BlockTypes.CRACKED_STONE_BRICKS.getDefaultState(), 60);
                 pattern.add(BlockTypes.COAL_ORE.getDefaultState(), 30);
+                try {
+                    editSession.setBlocks(region, pattern);
+                } catch (MaxChangedBlocksException e) {
+                    throw new RuntimeException(e);
+                }
+
             }
         } else if (m.equalsIgnoreCase("K")) {
             World world = BukkitAdapter.adapt(Bukkit.getWorld("mines"));
@@ -188,11 +201,17 @@ public class MineResetCommand implements CommandExecutor {
                 pattern.add(BlockTypes.STONE.getDefaultState(), 5);
                 pattern.add(BlockTypes.CRACKED_STONE_BRICKS.getDefaultState(), 70);
                 pattern.add(BlockTypes.COAL_ORE.getDefaultState(), 25);
+                try {
+                    editSession.setBlocks(region, pattern);
+                } catch (MaxChangedBlocksException e) {
+                    throw new RuntimeException(e);
+                }
+
             }
         } else if (m.equalsIgnoreCase("L")) {
             World world = BukkitAdapter.adapt(Bukkit.getWorld("mines"));
-            BlockVector3 pos1 = BlockVector3.at(-1199, 8, -1044);
-            BlockVector3 pos2 = BlockVector3.at(-1199, 22, -1020);
+            BlockVector3 pos1 = BlockVector3.at(-1199, 22, -1020);
+            BlockVector3 pos2 = BlockVector3.at(-1223, 8, -1044);
             CuboidRegion region = new CuboidRegion(world, pos1, pos2);
             try (EditSession editSession = WorldEdit.getInstance().newEditSession(world)) {
                 RandomPattern pattern = new RandomPattern();
@@ -200,6 +219,12 @@ public class MineResetCommand implements CommandExecutor {
                 pattern.add(BlockTypes.CRACKED_STONE_BRICKS.getDefaultState(), 65);
                 pattern.add(BlockTypes.COAL_ORE.getDefaultState(), 25);
                 pattern.add(BlockTypes.COAL_BLOCK.getDefaultState(), 5);
+                try {
+                    editSession.setBlocks(region, pattern);
+                } catch (MaxChangedBlocksException e) {
+                    throw new RuntimeException(e);
+                }
+
             }
         } else if (m.equalsIgnoreCase("M")) {
             World world = BukkitAdapter.adapt(Bukkit.getWorld("mines"));
@@ -212,6 +237,12 @@ public class MineResetCommand implements CommandExecutor {
                 pattern.add(BlockTypes.CRACKED_STONE_BRICKS.getDefaultState(), 50);
                 pattern.add(BlockTypes.COAL_BLOCK.getDefaultState(), 10);
                 pattern.add(BlockTypes.COAL_ORE.getDefaultState(), 35);
+                try {
+                    editSession.setBlocks(region, pattern);
+                } catch (MaxChangedBlocksException e) {
+                    throw new RuntimeException(e);
+                }
+
             }
         } else if(m.equalsIgnoreCase("N")) {
             World world = BukkitAdapter.adapt(Bukkit.getWorld("mines"));
@@ -223,6 +254,12 @@ public class MineResetCommand implements CommandExecutor {
                 pattern.add(BlockTypes.STONE.getDefaultState(), 5);
                 pattern.add(BlockTypes.CRACKED_STONE_BRICKS.getDefaultState(), 60);
                 pattern.add(BlockTypes.COAL_ORE.getDefaultState(), 35);
+                try {
+                    editSession.setBlocks(region, pattern);
+                } catch (MaxChangedBlocksException e) {
+                    throw new RuntimeException(e);
+                }
+
             }
         } else if(m.equalsIgnoreCase("O")) {
             World world = BukkitAdapter.adapt(Bukkit.getWorld("mines"));
@@ -234,6 +271,12 @@ public class MineResetCommand implements CommandExecutor {
                 pattern.add(BlockTypes.STONE.getDefaultState(), 5);
                 pattern.add(BlockTypes.CRACKED_STONE_BRICKS.getDefaultState(), 60);
                 pattern.add(BlockTypes.COAL_ORE.getDefaultState(), 35);
+                try {
+                    editSession.setBlocks(region, pattern);
+                } catch (MaxChangedBlocksException e) {
+                    throw new RuntimeException(e);
+                }
+
             }
         } else if(m.equalsIgnoreCase("P")) {
             World world = BukkitAdapter.adapt(Bukkit.getWorld("mines"));
@@ -245,6 +288,12 @@ public class MineResetCommand implements CommandExecutor {
                 pattern.add(BlockTypes.STONE.getDefaultState(), 5);
                 pattern.add(BlockTypes.CRACKED_STONE_BRICKS.getDefaultState(), 60);
                 pattern.add(BlockTypes.COAL_ORE.getDefaultState(), 35);
+                try {
+                    editSession.setBlocks(region, pattern);
+                } catch (MaxChangedBlocksException e) {
+                    throw new RuntimeException(e);
+                }
+
             }
         }
     }
