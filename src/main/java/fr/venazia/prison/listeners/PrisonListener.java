@@ -5,6 +5,7 @@ import com.bgsoftware.superiorskyblock.api.SuperiorSkyblockAPI;
 
 
 import com.bgsoftware.superiorskyblock.api.island.Island;
+import com.bgsoftware.superiorskyblock.api.wrappers.SuperiorPlayer;
 import fr.venazia.prison.commands.ModerationCommand;
 import fr.venazia.prison.utils.DataUtils;
 import fr.venazia.prison.utils.Placeholders;
@@ -14,9 +15,13 @@ import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.Component;
 import org.bukkit.*;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.Container;
 import org.bukkit.block.Sign;
+import org.bukkit.block.data.type.Chest;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
@@ -42,7 +47,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 
-import static fr.venazia.prison.commands.StaffContesteCommand.contest;
+import static java.lang.Thread.enumerate;
 import static java.lang.Thread.sleep;
 
 public class PrisonListener implements Listener {
@@ -52,9 +57,9 @@ public class PrisonListener implements Listener {
 
 
     @EventHandler
-    public void moderationFreeze(PlayerMoveEvent e){
+    public void moderationFreeze(PlayerMoveEvent e) {
         Player p = e.getPlayer();
-        if(ModerationCommand.frozenPlayers.get(p) != null && ModerationCommand.frozenPlayers.get(p)){
+        if (ModerationCommand.frozenPlayers.get(p) != null && ModerationCommand.frozenPlayers.get(p)) {
             e.setCancelled(true);
         }
     }
@@ -75,9 +80,9 @@ public class PrisonListener implements Listener {
     }
 
     @EventHandler
-    public void moderationFreezeDeco(PlayerQuitEvent e){
+    public void moderationFreezeDeco(PlayerQuitEvent e) {
         Player p = e.getPlayer();
-        if(ModerationCommand.frozenPlayers.get(p) != null && ModerationCommand.frozenPlayers.get(p)){
+        if (ModerationCommand.frozenPlayers.get(p) != null && ModerationCommand.frozenPlayers.get(p)) {
             Bukkit.broadcastMessage("§cLe joueur " + p.getName() + " a été déconnecté alors qu'il était immobilisé. Il a donc été sanctionné d'un bannissement définitif");
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "ban " + p.getName() + " §cDéconnexion alors qu'il était immobilisé.");
             ModerationCommand.frozenPlayers.put(p, false);
@@ -124,26 +129,25 @@ public class PrisonListener implements Listener {
     }
 
     @EventHandler
-    public void moderationFreezeHBChange(PlayerInteractEvent e){
+    public void moderationFreezeHBChange(PlayerInteractEvent e) {
         Player p = e.getPlayer();
-        if(ModerationCommand.frozenPlayers.get(p) != null && ModerationCommand.frozenPlayers.get(p)){
+        if (ModerationCommand.frozenPlayers.get(p) != null && ModerationCommand.frozenPlayers.get(p)) {
             e.setCancelled(true);
         }
     }
 
     @EventHandler
-    public void moderationFreezeChat(AsyncPlayerChatEvent e){
+    public void moderationFreezeChat(AsyncPlayerChatEvent e) {
         Player p = e.getPlayer();
-        if(ModerationCommand.frozenPlayers.get(p) != null && ModerationCommand.frozenPlayers.get(p)){
-            for(Player pl : Bukkit.getOnlinePlayers()){
-                if(pl.hasPermission("prison.moderation")){
+        if (ModerationCommand.frozenPlayers.get(p) != null && ModerationCommand.frozenPlayers.get(p)) {
+            for (Player pl : Bukkit.getOnlinePlayers()) {
+                if (pl.hasPermission("prison.moderation")) {
                     pl.sendMessage("§c§l[MOD] §c" + p.getName() + " §7: " + e.getMessage());
                 }
             }
             e.setCancelled(true);
         }
     }
-
 
 
     public void firstQuest(Player p) throws IOException {
@@ -157,16 +161,16 @@ public class PrisonListener implements Listener {
 
 
     @EventHandler
-    public void chat(AsyncPlayerChatEvent e){
+    public void chat(AsyncPlayerChatEvent e) {
         Player p = e.getPlayer();
         String message = e.getMessage();
         e.setCancelled(true);
-        if(message.startsWith("#")){
-            if(!p.hasPermission("prison.moderation")){
+        if (message.startsWith("#")) {
+            if (!p.hasPermission("prison.moderation")) {
                 return;
             }
-            for(Player pl : Bukkit.getOnlinePlayers()){
-                if(pl.hasPermission("prison.moderation")) {
+            for (Player pl : Bukkit.getOnlinePlayers()) {
+                if (pl.hasPermission("prison.moderation")) {
                     pl.sendMessage("§7[§cStaff§7] §c" + p.getName() + " §8» §f" + message.replaceFirst("#", ""));
                 }
             }
@@ -174,15 +178,225 @@ public class PrisonListener implements Listener {
         }
         String prefix = PlaceholderAPI.setPlaceholders(p, "%vault_prefix%");
         prefix = prefix.replace("&", "§");
-        if(p.hasPermission("prison.admin")) {
-            boolean isStaff = true;
+        for(Player pa : Bukkit.getOnlinePlayers()){
+            pa.sendMessage("§7" + prefix + p.getName() + " §8» §f" + message);
         }
-        String[] badWords = {"fdp", "ntm", "connard", "salope", "pute", "enculé", "encule", "enculer", "enculée", "enculée", "enculés", "enculées", "bite", "ꐙ", "ꐚ", "ꐛ", "ꐜ", "ꐝ", "ꐘ", ""};
-        if(message.contains(Arrays.toString(badWords))) {
-            p.sendMessage("§cMerci de ne pas utiliser de mots vulgaires / dérangants.");
+    }
+
+
+
+
+    @EventHandler
+    public void deleteShop(BlockBreakEvent e) {
+        Player p = e.getPlayer();
+        Block b = e.getBlock();
+        if (b.getType() == Material.OAK_SIGN || b.getType() == Material.OAK_WALL_SIGN || b.getType() == Material.ACACIA_SIGN || b.getType() == Material.BIRCH_SIGN) {
+            Sign sign = (Sign) b.getState();
+            if (sign.getLine(0).equalsIgnoreCase("[Shop]")) {
+                String UUID = SuperiorSkyblockAPI.getPlayer(p).getIsland().getUniqueId().toString();
+                String location = b.getLocation().toString();
+                if (!Objects.equals(DataUtils.readShop(UUID, location, "owner").toString(), p.getName())) {
+                    Bukkit.broadcastMessage(DataUtils.readShop(UUID, location, "owner").toString() + "/= " + p.getName());
+                    Messages.sendMessage(p, "&8[&aShops&8] &cVous ne pouvez pas supprimer le shop d'un autre joueur. Si il ne fait plus parti de votre île, contactez un staff");
+                    e.setCancelled(true);
+                } else {
+                    DataUtils.deleteShop(UUID, location);
+                    Messages.sendMessage(p, "&8[&aShops&8] &cLe shop a été supprimé avec succès.");
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    public void isShop(SignChangeEvent e) {
+        Player p = e.getPlayer();
+        int amount;
+        SuperiorPlayer sp = SuperiorSkyblockAPI.getPlayer(p.getUniqueId());
+        boolean isInside = SuperiorSkyblockAPI.getPlayer(p.getUniqueId()).isInsideIsland();
+        if (isInside) {
+            Island i = sp.getIsland();
+            if (e.getLine(0).equalsIgnoreCase("[Shop]")) {
+                if (e.getLine(1).isEmpty()) {
+                    Messages.sendMessage(p, "&8[&aShops&8] &cMerci de spécifier un prix.");
+                    e.getBlock().breakNaturally();
+                } else {
+                    double price = Double.parseDouble(e.getLine(1));
+                    if (price < 0) {
+                        Messages.sendMessage(p, "&8[&aShops&8] &cLe prix ne peut pas être négatif. Si vous souhaitez mettre gratuitement, mettez 0.");
+                        e.getBlock().breakNaturally();
+                        return;
+                    }
+                    String itemId;
+                    if (e.getLine(2).isEmpty()) {
+                        Messages.sendMessage(p, "&8[&aShops&8] &cMerci de spécifier un objet. Fait &e/iteminfo &cpour obtenir l'ID de l'objet.");
+                        e.getBlock().breakNaturally();
+                        return;
+                    } else {
+                        itemId = e.getLine(2);
+                        Material material = Material.matchMaterial(itemId);
+                        if (material == null) {
+                            Messages.sendMessage(p, "&8[&aShops&8] &cCet objet n'existe pas.");
+                            e.getBlock().breakNaturally();
+                            return;
+                        }
+                        if (e.getLine(3).isEmpty()) {
+                            Messages.sendMessage(p, "&8[&aShops&8] &cMerci de spécifier une quantité.");
+                            e.getBlock().breakNaturally();
+                            return;
+                        } else {
+                            try {
+                                amount = Integer.parseInt(e.getLine(3));
+                            } catch (NumberFormatException ex) {
+                                Messages.sendMessage(p, "&8[&aShops&8] &cLa quantité doit être un nombre.");
+                                e.getBlock().breakNaturally();
+                                return;
+                            }
+                        }
+                    }
+                    Block signBlock = e.getBlock();
+                    Block chestBlock = findChestNearSign(signBlock);
+                    if (chestBlock == null) {
+                        Messages.sendMessage(p, "&8[&aShops&8] &cAucun coffre trouvé à proximité du panneau.");
+                        e.getBlock().breakNaturally();
+                        return;
+                    }
+                    String chestLocation = chestBlock.getLocation().toString();
+                    Messages.sendMessage(p, "&8[&aShops&8] &aLe shop a été créé avec succès !");
+                    Messages.sendMessage(p, "&8[&aShops&8] &aFait &e/shopile &aen visant le panneau pour modifier &eles prix &aou &eles objets que tu vends");
+                    DataUtils.createShop(sp.getIsland().getUniqueId().toString(), price, itemId, amount, signBlock.getLocation().toString(), p.getName(), chestLocation);
+                }
+            }
+        }
+    }
+
+        private Block findChestNearSign (Block signBlock){
+            Block[] adjacentBlocks = {
+                    signBlock.getRelative(BlockFace.NORTH),
+                    signBlock.getRelative(BlockFace.SOUTH),
+                    signBlock.getRelative(BlockFace.EAST),
+                    signBlock.getRelative(BlockFace.WEST),
+                    signBlock.getRelative(BlockFace.UP),
+                    signBlock.getRelative(BlockFace.DOWN)
+            };
+
+            for (Block block : adjacentBlocks) {
+                if (block.getType() == Material.CHEST || block.getType() == Material.TRAPPED_CHEST) {
+                    return block;
+                }
+            }
+            return null;
+        }
+
+    private Location parseLocationString(String locString) {
+        try {
+            String[] parts = locString.replace("Location{world=", "").replace("}", "").split(",");
+            String worldName = parts[0].split("=")[1].trim();
+            double x = Double.parseDouble(parts[1].split("=")[1]);
+            double y = Double.parseDouble(parts[2].split("=")[1]);
+            double z = Double.parseDouble(parts[3].split("=")[1]);
+            float pitch = Float.parseFloat(parts[4].split("=")[1]);
+            float yaw = Float.parseFloat(parts[5].split("=")[1]);
+            World world = Bukkit.getWorld(worldName);
+            if (world == null) {
+                Bukkit.getLogger().warning("World not found: " + worldName);
+                return null;
+            }
+            return new Location(world, x, y, z, yaw, pitch);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    @EventHandler
+    public void signRightClick(PlayerInteractEvent e) {
+        Player p = e.getPlayer();
+        if(e.getClickedBlock().getType() == Material.AIR || e.getClickedBlock() == null){
             return;
         }
-        Bukkit.broadcastMessage("§7" + prefix + p.getName() + " §8» §f" + message);
+        if (e.getAction() == Action.RIGHT_CLICK_BLOCK || e.getAction() == Action.LEFT_CLICK_BLOCK || e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.PHYSICAL || e.getAction() == Action.LEFT_CLICK_AIR) {
+            Block b = e.getClickedBlock();
+            if (b != null && b.getType().equals(Material.OAK_SIGN) || b.getType().equals(Material.OAK_WALL_SIGN) || b.getType().equals(Material.ACACIA_SIGN) || b.getType().equals(Material.BIRCH_SIGN)) {
+                Sign sign = (Sign) b.getState();
+                if (sign.getLine(0).equalsIgnoreCase("[Shop]")) {
+                    String UUID = SuperiorSkyblockAPI.getPlayer(p).getIsland().getUniqueId().toString();
+                    String location = p.getTargetBlockExact(100).getLocation().toString();
+                    Object owner = DataUtils.readShop(UUID, location, "owner");
+                    Object item = DataUtils.readShop(UUID, location, "item");
+                    String chestLocString = DataUtils.readShop(UUID, location, "chestLoc").toString();
+                    Location loc = parseLocationString(chestLocString);
+                    if(item == null){
+                        Messages.sendMessage(p, "&8[&aShops&8] &cErreur lors de la lecture de l'item mis en vente. Contacte un administrateur.");
+                    }
+                    if(loc == null){
+                        Messages.sendMessage(p, "&8[&aShops&8] &cErreur lors de la lecture de la localisation du coffre. Contacte un administrateur.");
+                    }
+                    if (owner == p.getName()) {
+                        Messages.sendMessage(p, "&8[&aShops&8] &cVous ne pouvez pas &6vendre/acheter &cà votre propre shop. Si vous pensez qu'il s'agit d'une erreur, contactez un administrateur.");
+                    }
+                    Container c = (Container) loc.getBlock().getState();
+                    if(c == null){
+                        Messages.sendMessage(p, "&8[&aShops&8] &cErreur lors de la lecture du coffre. Contacte un administrateur.");
+                    }
+                    if(c.getInventory().contains(Material.getMaterial(item.toString()))){
+                        c.getInventory().removeItem(new ItemStack(Material.getMaterial(item.toString()), 1));
+                        p.getInventory().addItem(new ItemStack(Material.getMaterial(item.toString()), 1));
+                        Messages.sendMessage(p, "&8[&aShops&8] &aVous avez acheté &e" + item + " &apour &e" + DataUtils.readShop(UUID, location, "prix") + "§a$");
+                        Player ownerP = Bukkit.getPlayer(owner.toString());
+                        if(ownerP != null){
+                            Messages.sendMessage(ownerP, "&7&lVENTE >> &8[&aShops&8] &aVous avez vendu &e" + item + " &aà &e" + p.getName() + " &apour &e" + DataUtils.readShop(UUID, location, "prix") + "§a$");
+                        }
+                    } else {
+                        Messages.sendMessage(p, "&8[&aShops&8] &cLe shop est actuellement en rupture de stock.");
+                        if(owner != null){
+                            Player ownerP = Bukkit.getPlayer(owner.toString());
+                            if(ownerP != null){
+                                Messages.sendMessage(ownerP, "&8[&aShops&8] &c&oIl semblerait que votre shop au cordonnées &7" + loc.getBlockX() + " " + loc.getBlockY() + " " + loc.getBlockZ() + " &csoit en rupture de stock.");
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    public void chestShopProtect(PlayerInteractEvent e){
+        Player p = e.getPlayer();
+        if(e.getClickedBlock().getType() == Material.AIR){
+            return;
+        }
+        if(p.hasPermission("admin")){
+            return;
+        }
+        if(e.getClickedBlock().getType() == Material.CHEST || e.getClickedBlock().getType() == Material.TRAPPED_CHEST){
+            Block b = e.getClickedBlock();
+            String UUID = SuperiorSkyblockAPI.getPlayer(p).getIsland().getUniqueId().toString();
+            String location = b.getLocation().toString();
+            if(DataUtils.readShop(UUID, location, "owner") != null){
+                if(!Objects.equals(DataUtils.readShop(UUID, location, "owner").toString(), p.getName())){
+                    Messages.sendMessage(p, "&8[&aShops&8] &cVous ne pouvez pas ouvrir le shop d'un autre joueur.");
+                    e.setCancelled(true);
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    public void signShopProtect(SignChangeEvent e){
+        Player p = e.getPlayer();
+        if(p.hasPermission("admin")){
+            return;
+        }
+        if(e.getLine(0).equalsIgnoreCase("[Shop]")){
+            String UUID = SuperiorSkyblockAPI.getPlayer(p).getIsland().getUniqueId().toString();
+            String location = p.getTargetBlockExact(100).getLocation().toString();
+            if(DataUtils.readShop(UUID, location, "owner") != null){
+                if(!Objects.equals(DataUtils.readShop(UUID, location, "owner").toString(), p.getName())){
+                    Messages.sendMessage(p, "&8[&aShops&8] &cVous ne pouvez pas modifier le shop d'un autre joueur.");
+                    e.setCancelled(true);
+                }
+            }
+        }
     }
 
     @EventHandler
@@ -220,11 +434,22 @@ public class PrisonListener implements Listener {
     @EventHandler
     public void checkChatLocked(AsyncPlayerChatEvent e) {
         Player p = e.getPlayer();
-        if (ModerationCommand.disabledCommands.get("chat")) {
+        if (ModerationCommand.disabledCommands.get("chat") != null) {
             e.setCancelled(true);
             p.sendMessage("§cLe chat est actuellement désactivé par la modération.");
         } else if(p.hasPermission("prison.moderation")){
             e.setCancelled(false);
+        }
+    }
+
+    @EventHandler
+    public void playerDisallow(PlayerPreLoginEvent e) {
+        if (ModerationCommand.disabledCommands.get(e.getName()) != null) {
+            e.disallow(PlayerPreLoginEvent.Result.KICK_OTHER, "§3§oTu n'es pas autorisé à rejoindre le serveur pour le moment. Réessaie plus tard ou demande à un administrateur.");
+            return;
+        } else if(ModerationCommand.disabledCommands.get("maintenance") != null){
+            e.disallow(PlayerPreLoginEvent.Result.KICK_OTHER, "§6§oLe serveur est actuellement en maintenance. Réessaie plus tard ou demande à un administrateur.");
+            return;
         }
     }
 
@@ -418,18 +643,5 @@ public class PrisonListener implements Listener {
                 event.setLine(i, ChatColor.translateAlternateColorCodes('&', (Objects.requireNonNull(event.getLine(i)))));
             }
         }
-    }
-
-    @EventHandler
-    public void onPlayerChat(AsyncPlayerChatEvent e) {
-        Player p = e.getPlayer();
-        if (contest.containsKey(p)) {
-            ;
-            Messages.sendCentered(p, "§x§1§E§6§2§F§B§lR§x§2§1§6§7§F§B§lé§x§2§4§6§B§F§B§lp§x§2§7§7§0§F§C§lo§x§2§A§7§4§F§C§ln§x§2§C§7§9§F§C§ls§x§2§F§7§E§F§C§le §x§3§2§8§2§F§D§le§x§3§5§8§7§F§D§ln§x§3§8§8§B§F§D§lr§x§3§B§9§0§F§D§le§x§3§E§9§4§F§E§lg§x§4§1§9§9§F§E§li§x§4§3§9§E§F§E§ls§x§4§6§A§2§F§E§lt§x§4§9§A§7§F§F§lr§x§4§C§A§B§F§F§lé§x§4§F§B§0§F§F§le");
-            p.sendMessage("§6Votre réponse: §e" + e.getMessage());
-            e.setCancelled(true);
-            contest.remove(p);
-        }
-
     }
 }

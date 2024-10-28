@@ -1,0 +1,8 @@
+disabled-events:
+  commands: true
+  chat: true
+  server-switch: true
+whitelisted-commands:
+- help
+blacklisted-commands:
+- server

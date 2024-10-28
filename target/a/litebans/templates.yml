@@ -1,0 +1,5 @@
+ban-templates:
+  mechant:
+    reason: 'Méchant!'
+    message: '&4Votre compte a été désactivé! &cVous êtes méchant.'
+    permission: venazia.anticheat.mechant

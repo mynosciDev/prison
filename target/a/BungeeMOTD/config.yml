@@ -1,0 +1,10 @@
+configVersion: 1
+prefix: §d§lMOTD §f§l» §r
+enalbleMOTD: true
+motd1: '&8[➜] &7&lVenazia'
+motd2: '&cServeur en développement ! Plus d''infos sur notre &9&LDiscord &c!'
+enablePlayerlist: false
+lines:
+- ''
+enablePlayercount: false
+text: 

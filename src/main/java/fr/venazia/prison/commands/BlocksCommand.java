@@ -1,12 +1,14 @@
 package fr.venazia.prison.commands;
 
 import fr.venazia.prison.Main;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
+import fr.venazia.prison.utils.Messages;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
+import revxrsal.commands.annotation.Command;
+import revxrsal.commands.annotation.Description;
+import revxrsal.commands.annotation.Named;
+import revxrsal.commands.bukkit.actor.BukkitCommandActor;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,46 +16,19 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.NumberFormat;
 
-public class BlocksCommand implements CommandExecutor {
-    @Override
-    public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
-        if (commandSender instanceof Player) {
-            if(strings.length == 1) {
-                commandSender.sendMessage("§cUsage: /bb add <player> <amount>");
-                return true;
-            } else if(strings.length == 3) {
-                if(strings[0].equalsIgnoreCase("add")) {
-                    Player p = (Player) commandSender;
-                    String uuid = p.getUniqueId().toString();
-                    File playersDir = new File(Main.getINSTANCE().getDataFolder(), "players");
-                    File playerFile = new File(playersDir, uuid + ".json");
-                    if (playerFile.exists()) {
-                        try {
-                            String content = new String(Files.readAllBytes(Paths.get(playerFile.getPath())));
-                            JSONObject jsonObject = new JSONObject(content);
-                            int blocs = jsonObject.getInt("blocs");
-                            int amount = Integer.parseInt(strings[2]);
-                            blocs += amount;
-                            jsonObject.put("blocs", blocs);
-                            try {
-                                Files.write(Paths.get(playerFile.getPath()), jsonObject.toString(4).getBytes());
-                                p.sendMessage("§aVous avez ajouté §b" + NumberFormat.getInstance().format(amount) + " §bblocs à votre total.");
-                            } catch (IOException e) {
-                                p.sendMessage("§cUne erreur est survenue lors de l'écriture des données du joueur.");
-                                e.printStackTrace();
-                            }
-                        } catch (IOException e) {
-                            p.sendMessage("§cUne erreur est survenue lors de la lecture des données du joueur.");
-                            e.printStackTrace();
-                        }
-                    } else {
-                        p.sendMessage("§cAucune donnée trouvée pour ce joueur.");
-                    }
-                }
-                return true;
+public class BlocksCommand {
+
+    @Command("bb")
+    @Description("Gérer les blocs pour les joueurs")
+    public void onCommand(BukkitCommandActor actor, @Named("action") String action, @Named("joueur") String playerName, @Named("quantité") int amount) {
+        Player p = actor.requirePlayer();
+        if (action.equalsIgnoreCase("add")) {
+            Player target = Bukkit.getPlayer(playerName);
+            if (target == null) {
+                Messages.sendMessage(p, "§cJoueur non trouvé.");
+                return;
             }
-            Player p = (Player) commandSender;
-            String uuid = p.getUniqueId().toString();
+            String uuid = target.getUniqueId().toString();
             File playersDir = new File(Main.getINSTANCE().getDataFolder(), "players");
             File playerFile = new File(playersDir, uuid + ".json");
             if (playerFile.exists()) {
@@ -61,15 +36,41 @@ public class BlocksCommand implements CommandExecutor {
                     String content = new String(Files.readAllBytes(Paths.get(playerFile.getPath())));
                     JSONObject jsonObject = new JSONObject(content);
                     int blocs = jsonObject.getInt("blocs");
-                    p.sendMessage("§bVous avez cassé §a" + blocs + " §bblocs");
+                    blocs += amount;
+                    jsonObject.put("blocs", blocs);
+                    Files.write(Paths.get(playerFile.getPath()), jsonObject.toString(4).getBytes());
+                    Messages.sendMessage(p, "§aVous avez ajouté §b" + NumberFormat.getInstance().format(amount) + " §ablocs à " + playerName + ".");
                 } catch (IOException e) {
-                    p.sendMessage("§cUne erreur est survenue lors de la lecture des données du joueur.");
+                    Messages.sendMessage(p, "§cUne erreur est survenue lors de l'écriture des données du joueur.");
                     e.printStackTrace();
                 }
             } else {
-                p.sendMessage("§cAucune donnée trouvée pour ce joueur.");
+                Messages.sendMessage(p, "§cAucune donnée trouvée pour ce joueur.");
             }
+        } else {
+            Messages.sendMessage(p, "§cUsage: /bb add <joueur> <quantité>");
         }
-        return true;
+    }
+
+    @Command("bb")
+    @Description("Vérifier les blocs pour le joueur")
+    public void onCommand(BukkitCommandActor actor) {
+        Player p = actor.requirePlayer();
+        String uuid = p.getUniqueId().toString();
+        File playersDir = new File(Main.getINSTANCE().getDataFolder(), "players");
+        File playerFile = new File(playersDir, uuid + ".json");
+        if (playerFile.exists()) {
+            try {
+                String content = new String(Files.readAllBytes(Paths.get(playerFile.getPath())));
+                JSONObject jsonObject = new JSONObject(content);
+                int blocs = jsonObject.getInt("blocs");
+                Messages.sendMessage(p, "§bVous avez cassé §a" + blocs + " §bblocs.");
+            } catch (IOException e) {
+                Messages.sendMessage(p, "§cUne erreur est survenue lors de la lecture des données du joueur.");
+                e.printStackTrace();
+            }
+        } else {
+            Messages.sendMessage(p, "§cAucune donnée trouvée pour ce joueur.");
+        }
     }
 }

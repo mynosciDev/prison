@@ -7,10 +7,7 @@ import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.commands.WorldGuardCommands;
 import fr.venazia.prison.commands.*;
 import fr.venazia.prison.listeners.PrisonListener;
-import fr.venazia.prison.utils.KitManager;
-import fr.venazia.prison.utils.Placeholders;
-import fr.venazia.prison.utils.TabListUpdater;
-import fr.venazia.prison.utils.WarpManager;
+import fr.venazia.prison.utils.*;
 import fr.venazia.prison.warps.Warp;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.Bukkit;
@@ -26,7 +23,6 @@ import revxrsal.commands.bukkit.actor.BukkitCommandActor;
 
 
 public final class Main extends JavaPlugin {
-    private KitManager kitManager;
     private static PluginLogger logger;
     private static Main INSTANCE;
     public static Main getINSTANCE() {
@@ -42,9 +38,6 @@ public final class Main extends JavaPlugin {
         return this.adventure;
     }
 
-    public KitManager getKitManager() {
-        return kitManager;
-    }
 
 
 
@@ -56,8 +49,6 @@ public final class Main extends JavaPlugin {
         logger.info("Démarrage du plugin");
         INSTANCE = this;
         saveDefaultConfig();
-        this.kitManager = new KitManager(this);
-        kitManager.loadKits();
         regCommands();
         regListeners();
         this.warpManager = new WarpManager();
@@ -76,9 +67,9 @@ public final class Main extends JavaPlugin {
 
     private void regListeners(){
         getServer().getPluginManager().registerEvents(new PrisonListener(), this);
-        getServer().getPluginManager().registerEvents(new GodCommand(), this);
         getServer().getPluginManager().registerEvents(new VoyageCommand(), this);
         getServer().getPluginManager().registerEvents(new EventCommand(), this);
+        getServer().getPluginManager().registerEvents(new KitCommand(), this);
     }
 
     public void regOthers() {
@@ -88,37 +79,27 @@ public final class Main extends JavaPlugin {
     }
 
 
+
+
+
     public void regCommands() {
-        Lamp<BukkitCommandActor> b = BukkitLamp.builder(this).build();
-        b.register(new ModerationCommand(), new BugCommand(), new SellCommands(), new EventCommand(), new Challenges());
-        getCommand("permile").setExecutor(new UtilsCommand());
-        getCommand("acceptquest").setExecutor(new AcceptQuestCommand());
-        getCommand("darkmarket").setExecutor(new DarkMarketCommand());
-        getCommand("prestige").setExecutor(new PrestigeCommand());
-        getCommand("market").setExecutor(new MarketCommand());
-        getCommand("voyages").setExecutor(new VoyageCommand());
-        getCommand("warp").setExecutor(new WarpCommand());
-        getCommand("god").setExecutor(new GodCommand());
-        kitManager = new KitManager(this);
-        getCommand("createkit").setExecutor(new CreateKitCommand(getKitManager()));
-        getCommand("kit").setExecutor(new KitCommand(Main.getINSTANCE()));
-        getCommand("broadcast").setExecutor(new BroadcastCommand());
-        getCommand("gamemode").setExecutor(new GamemodeCommand());
-        getCommand("lookup").setExecutor(new LookupCommand());
-        getCommand("valeur").setExecutor(new ValueCommand());
-        getCommand("jailconteste").setExecutor(new StaffContesteCommand());
-        getCommand("prison").setExecutor(new PrisonCommand());
-        getCommand("prison").setTabCompleter(new PrisonCommand());
-        getCommand("help").setExecutor(new UtilsCommand());
-        getCommand("iname").setExecutor(new UtilsCommand());
-        getCommand("uptime").setExecutor(new UtilsCommand());
-        getCommand("lore").setExecutor(new UtilsCommand());
-        getCommand("blocksbroken").setExecutor(new BlocksCommand());
-        getCommand("spawn").setExecutor(new SpawnCommand());
-        getCommand("minereset").setExecutor(new MineResetCommand());
-        getCommand("rankup").setExecutor(new RankupCommand());
-        getCommand("money").setExecutor(new MoneyCommand());
-        getCommand("chance").setExecutor(new ChanceCommand());
+        Lamp<BukkitCommandActor> b = BukkitLamp.builder(this)
+                .exceptionHandler(new BukkitExceptionHandleCommand())
+                .build();
+        b.register(
+                new KitCommand(),
+                new ModerationCommand(),
+                new SellCommands(),
+                new BlocksCommand(),
+                new EventCommand(),
+                new MarketCommand(),
+                new MoneyCommand(),
+                new Challenges(),
+                new VoyageCommand(),
+                new ShopsCommand(),
+                new UtilsCommand(),
+                new RankupCommand()
+        );
     }
 
     @Override

@@ -1,0 +1,26 @@
+[
+  {
+    "ip": "104.28.252.47",
+    "blacklisted": true,
+    "reason": "Unknown Location",
+    "time": 1722712799723
+  },
+  {
+    "ip": "104.28.252.50",
+    "blacklisted": true,
+    "reason": "Unknown Location",
+    "time": 1722713037720
+  },
+  {
+    "ip": "104.28.252.50",
+    "blacklisted": true,
+    "reason": "Unknown Location",
+    "time": 1722713089715
+  },
+  {
+    "ip": "104.28.252.50",
+    "blacklisted": true,
+    "reason": "Unknown Location",
+    "time": 1722717672429
+  }
+]

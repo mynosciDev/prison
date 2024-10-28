@@ -6,13 +6,14 @@ import com.bgsoftware.superiorskyblock.api.menu.Menu;
 import com.bgsoftware.superiorskyblock.api.wrappers.SuperiorPlayer;
 import org.bukkit.entity.Player;
 import revxrsal.commands.annotation.Command;
+import revxrsal.commands.annotation.Named;
 import revxrsal.commands.annotation.Optional;
 import revxrsal.commands.bukkit.actor.BukkitCommandActor;
 
 public class Challenges {
 
-    @Command({"challenges", "c"})
-    public void challenges(BukkitCommandActor a, @Optional String[] args) {
+    @Command({"challengesid", "cid"})
+    public void challenges(BukkitCommandActor a, @Named("ID_CHALLENGE")  String[] id) {
         Player p = a.asPlayer();
         if (!p.hasPermission("admin")) {
             p.sendMessage("§cCette commande n'est pas encore disponible.");

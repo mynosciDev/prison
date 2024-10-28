@@ -26,7 +26,7 @@ public class MarketUtils {
     public static ItemStack getItem(int id){
         if(DataUtils.readMarketValue("item", id) == null){
             Bukkit.broadcastMessage("Item null");
-            return new ItemBuilder(Material.BARRIER).displayname("§cIl n'y a pas d'items en vente ici !").build();
+            return new ItemBuilder(Material.BARRIER).setName("§cIl n'y a pas d'items en vente ici !").toItemStack();
         }
         return DataUtils.readMarketValue("item", id);
     }

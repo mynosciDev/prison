@@ -11,33 +11,29 @@ import com.sk89q.worldedit.world.block.BlockTypes;
 import com.sk89q.worldedit.function.pattern.RandomPattern;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.checkerframework.checker.signature.qual.PrimitiveType;
 import org.jetbrains.annotations.NotNull;
+import revxrsal.commands.annotation.Command;
+import revxrsal.commands.annotation.Description;
+import revxrsal.commands.bukkit.actor.BukkitCommandActor;
+import revxrsal.commands.bukkit.annotation.CommandPermission;
 
-public class MineResetCommand implements CommandExecutor {
-    @Override
-    public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
-        if (commandSender instanceof Player) {
-            Player p = (Player) commandSender;
-            if (strings.length == 0) {
-                p.sendMessage("§cUsage: /minereset <mine>");
-            } else {
-                if (strings[0].equalsIgnoreCase("A") || strings[0].equalsIgnoreCase("B") || strings[0].equalsIgnoreCase("C") || strings[0].equalsIgnoreCase("D") || strings[0].equalsIgnoreCase("E") || strings[0].equalsIgnoreCase("F") || strings[0].equalsIgnoreCase("G") || strings[0].equalsIgnoreCase("H") || strings[0].equalsIgnoreCase("I") || strings[0].equalsIgnoreCase("J") || strings[0].equalsIgnoreCase("K") || strings[0].equalsIgnoreCase("L") || strings[0].equalsIgnoreCase("M") || strings[0].equalsIgnoreCase("N") || strings[0].equalsIgnoreCase("O") || strings[0].equalsIgnoreCase("P") || strings[0].equalsIgnoreCase("Q") || strings[0].equalsIgnoreCase("R") || strings[0].equalsIgnoreCase("S") || strings[0].equalsIgnoreCase("T") || strings[0].equalsIgnoreCase("U") || strings[0].equalsIgnoreCase("V") || strings[0].equalsIgnoreCase("W") || strings[0].equalsIgnoreCase("X") || strings[0].equalsIgnoreCase("Y") || strings[0].equalsIgnoreCase("Z")) {
-                    p.sendMessage("§aLa mine " + strings[0] + " a été reset avec succès !");
-                    resetMine(p, strings[0]);
-                } else {
-                    p.sendMessage("§cLa mine " + strings[0] + " n'existe pas !");
-                }
-            }
+public class MineResetCommand  {
+
+    @Command("minereset")
+    @Description("Reset mine")
+    @CommandPermission("prison.admin")
+    public void mineReset(BukkitCommandActor a, String m){
+        Player p = a.asPlayer();
+        if(m.equalsIgnoreCase("A") || m.equalsIgnoreCase("B") || m.equalsIgnoreCase("C") || m.equalsIgnoreCase("D") || m.equalsIgnoreCase("E") || m.equalsIgnoreCase("F") || m.equalsIgnoreCase("G") || m.equalsIgnoreCase("H") || m.equalsIgnoreCase("I") || m.equalsIgnoreCase("J") || m.equalsIgnoreCase("K") || m.equalsIgnoreCase("L") || m.equalsIgnoreCase("M") || m.equalsIgnoreCase("N") || m.equalsIgnoreCase("O") || m.equalsIgnoreCase("P") || m.equalsIgnoreCase("Q") || m.equalsIgnoreCase("R") || m.equalsIgnoreCase("S") || m.equalsIgnoreCase("T") || m.equalsIgnoreCase("U") || m.equalsIgnoreCase("V") || m.equalsIgnoreCase("W") || m.equalsIgnoreCase("X") || m.equalsIgnoreCase("Y") || m.equalsIgnoreCase("Z")) {
+            p.sendMessage("§aLa mine " + m + " a été reset avec succès !");
+            resetMine(p, m);
         } else {
-            if (strings.length == 0) {
-                commandSender.sendMessage("§cUsage: /minereset <mine>");
-            }
+            p.sendMessage("§cLa mine " + m + " n'existe pas !");
         }
-        return true;
     }
 
     private void resetMine(Player player, String mineName) {

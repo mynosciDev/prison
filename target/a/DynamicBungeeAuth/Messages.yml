@@ -1,0 +1,169 @@
+AutoMessages:
+  register:
+    - '&b[➜] &fBienvenue sur &b&lVenazia&f, il semble que ce soit la première fois que vous vous connectez au serveur. Veuillez vous enregistrer avec la commande &b/register motdepasse motdepasse %captcha%&f.'
+    - '&7'
+    - '&4⚠ &cLe partage de compte est interdit et passible de sanctions &4⚠'
+  login:
+    - '&b[➜] &fRavi de te revoir, connecte-toi en utilisant la commande &b/login motdepasse&f.'
+  auto:
+    - '&2[➜] &fConnexion automatique car vous êtes &2premium&f.'
+  session:
+    - '&2[➜] &fConnexion automatique car votre session a été rétablie&f.'
+
+KickMessages:
+  register: |-
+    &4[➜] &cVous avez pris trop de temps pour vous connecter ! Si vous avez oublié votre mot de passe, contactez-nous !
+  login: |-
+    &4[➜] &cVous avez pris trop de temps pour vous connecter ! Si vous avez oublié votre mot de passe, contactez-nous !
+  MaxLogin: |-
+    &4[➜] &cTrop de joueurs tentent de se connecter en même temps ! Réessayez dans quelques secondes.
+  MaxLoginCracked: |-
+    &4[➜] &cTrop de joueurs tentent de se connecter en même temps ! Réessayez dans quelques secondes.
+  PremiumKick: |-
+    &2[➜] &aMerci de vous reconnecter pour appliquer les changements.
+  unregisterkick: |-
+    &2[➜] &aVous avez été déconnecté par un membre du staff. &6(%admin%)
+  NameCheck: |-
+    &4[➜] &cMerci de choisir un autre pseudo, celui-ci est déjà pris.
+  MaxAccountsIP: |-
+    &4[➜] &cTrop de comptes semblent enregistrés sur votre adresse IP.
+  MaxPlayingIP: |-
+    &4[➜] &cTrop de comptes semblent enregistrés sur votre adresse IP.
+  ClearCache: |-
+    &2[➜] &aMerci de vous reconnecter pour appliquer les changements.
+  Logout: |-
+    &2[➜] &aVous avez été déconnecté avec succès.
+
+Titles:
+  register:
+    top: '&2[➜]'
+    bottom: '&fVotre &bcaptcha &fest: &b%captcha%'
+    options:
+      fadein: 20
+      fadeout: 20
+      stay: 200
+  login:
+    top: '&2[➜]'
+    bottom: '&fConnectez-vous : &b/login motdepasse'
+    options:
+      fadein: 20
+      fadeout: 20
+      stay: 200
+  auto:
+    top: '&2'
+    bottom: '&b&lConnexion automatique'
+    options:
+      fadein: 20
+      fadeout: 20
+      stay: 200
+  successful:
+    top: '&a'
+    bottom: '&a&lConnexion réussie ! Bon jeu !'
+    options:
+      fadein: 20
+      fadeout: 20
+      stay: 200
+  session:
+    top: '&a'
+    bottom: '&a&lSession rétablie !'
+    options:
+      fadein: 20
+      fadeout: 20
+      stay: 200
+
+Commands:
+  register:
+    exist: '&8[➜] &cVous êtes déjà enregistrés !'
+    wrong: '&8[➜] &cVous avez mal utilisé la commande register, utilisez &e/register motdepasse motdepasse'
+    non_captcha: '&8[➜] &cVous avez oublié de mettre le captcha à la fin : %captcha%'
+    wrong_captcha: '&8[➜] &cCaptcha incorrect, votre captcha est : %captcha%'
+    bannedpw: '&8[➜] &cCe mot de passe est banni, veuillez en choisir un autre.'
+    to_short: '&8[➜] &cCe mot de passe est trop court.'
+    to_long: '&8[➜] &cCe mot de passe est trop long.'
+    registering: '&3[➜] &bEnregistrement...'
+    success: '&2[➜] &aVotre compte a été enregistré avec succès, vous pouvez maintenant jouer.'
+  login:
+    already: '&4[➜] &cTu es déjà connecté.'
+    wrong_pass: '&4[➜] &cMot de passe incorrect. Réessayez.'
+    wrong_kick: '&4[➜] &cMot de passe incorrect.'
+    correct: '&2[➜] &aConnexion réussie !'
+    wrong_cmd: '&c[➜] &4Tu as mal utilisé la commande, utilise &f/login motdepasse'
+    register_first: '&4[➜] &cVous devez d''abord vous enregistrer.'
+  cracked:
+    already: '&4[➜] &cCe compte est déjà défini comme cracked. Vous pouvez également essayer /premium'
+    successful: '&2[➜] &aVotre compte a été défini comme cracké, vous pouvez maintenant jouer.'
+    exception: '&4[➜] &cCe compte n''est pas enregistré sur le serveur'
+  premium:
+    successful: '&4[➜] &aVotre compte a été défini comme premium, veuillez vous reconnecter au serveur.'
+    on_list: ' &4[➜] &cCe compte est déjà dans la liste, veuillez vous reconnecter pour appliquer les changements.'
+    error: '&4[➜] &cUne erreur étrange est survenue, veuillez contacter un membre du staff !'
+    already_premium: '&4[➜] &cCe compte est déjà défini comme premium, cette commande ne fonctionnera pas !'
+    not_registered: '&4[➜] &aVous devez d''abord enregistrer votre compte pour utiliser /premium'
+    not_mojang: '&4[➜] &cCe compte n''existe pas dans le système Mojang'
+    deactivated: '&4[➜] &cCette commande a été désactivée'
+    only_player: '&4[➜] &cCette commande ne fonctionne que pour les joueurs'
+    wrong_method: '&4[➜] &cCette commande ne fonctionne pas avec cette méthode'
+    require_login: '&4[➜] &cCette commande ne fonctionne que si vous êtes connecté. Veuillez utiliser /login motdepasse'
+  unregister:
+    correct: '&4[➜] &aUtilisation correcte : &c/authadmin forcelogin %player%'
+    console: '&a[➜] &aL''utilisateur %player% a été désenregistré par %admin%'
+    success: '&a[➜] &aLe joueur a été désenregistré avec succès'
+  disableshield:
+    success: '&a[➜] &cLe bouclier a été désactivé correctement, tous les joueurs peuvent maintenant rejoindre'
+    wrong: '&a[➜] &cCe serveur n''utilise pas la protection en mode bouclier.'
+  cacheclear:
+    correct: '&a[➜] &aUtilisation correcte : &c/authadmin playercacheclear %player%'
+    success: '&a[➜] &aLe cache pour %player% a été vidé du serveur'
+    player_msg: '&a[➜] &cVos informations de joueur ont été supprimées du cache par un admin, essayez de vous reconnecter.'
+  changepassword:
+    not: '&a[➜] &cVous devez d''abord vous enregistrer...'
+    wrong: '&a[➜] &cUtilisation correcte : &a/changepassword motdepasse_actuel nouveau_motdepasse'
+    same: '&a[➜] &cVotre nouveau mot de passe est identique à l''ancien, veuillez essayer avec un mot de passe différent.'
+    successful: '&a[➜] &cLe mot de passe de votre compte a été mis à jour avec succès'
+    incorrect: '&a[➜] &cVotre mot de passe actuel ne correspond pas au mot de passe enregistré.'
+  premium_adm:
+    wrong: '&cUtilisation correcte : /authadmin premium pseudo'
+    already: '&cCe compte est déjà défini comme premium'
+    sucess: '&aCe compte est maintenant défini comme premium'
+    not_registered: '&cCe compte n''existe pas sur ce serveur'
+  cracked_adm:
+    wrong: '&cUtilisation correcte : /authadmin cracked pseudo'
+    already: '&cCe compte est déjà défini comme cracked'
+    sucess: '&aCe compte est maintenant défini comme cracked'
+    not_registered: '&cCe compte n''existe pas sur ce serveur'
+  fetchdata: '&aLa commande est en cours de traitement et le résultat sera affiché dans votre base de données "playerip" Table'
+  redis: '&aLa commande a été exécutée sur le proxy du joueur'
+  rediserror: '&cLe joueur n''est pas en ligne ou RedisBungee n''est pas installé.'
+  playerip:
+    ipnotfound: '&cL''adresse IP du joueur n''est pas enregistrée dans la base de données'
+    addaccount: '&a1 compte ajouté à l''IP du joueur %player%'
+    minusaccount: '&a1 compte supprimé à l''IP du joueur %player%'
+    addplaying: '&a1 compte ajouté à l''IP du joueur %player%'
+    minusplaying: '&a1 compte supprimé à l''IP du joueur %player%'
+    delete: '&aL''IP de %player% a été supprimée de la base de données'
+  forcelogin:
+    success: '&cVous avez été connecté par un membre du staff : &e%staff_name%'
+    offline: '&cL''utilisateur %player% n''est pas connecté au serveur'
+    not_registered: '&cCe compte n''existe pas sur ce serveur'
+
+HelpADM:
+  - '/authadmin unregister <pseudo>'
+  - '/authadmin clearcache <pseudo>'
+  - '/authadmin disableshield'
+  - '/authadmin clearnames'
+  - '/authadmin premium <pseudo>'
+  - '/authadmin cracked <pseudo>'
+  - '/authadmin fetchada'
+  - '/authadmin forcelogin <pseudo>'
+  - '/authadmin playerip "pour l''aide IP du joueur"'
+
+HelpPlayerIP:
+  - '/authadmin playerip accounts add <pseudo>'
+  - '/authadmin playerip accounts minus <pseudo>'
+  - '/authadmin playerip max_accounts add <pseudo>'
+  - '/authadmin playerip max_accounts minus <pseudo>'
+  - '/authadmin playerip playing add <pseudo>'
+  - '/authadmin playerip playing minus <pseudo>'
+  - '/authadmin playerip max_playing add <pseudo>'
+  - '/authadmin playerip max_playing minus <pseudo>'
+  - '/authadmin playerip delete <pseudo>'

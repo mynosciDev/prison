@@ -4,36 +4,39 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 public class Messages {
-    public static String PREFIX = "§8[§6Prison§8] ";
-    public static String NO_PERMISSION = PREFIX + "§cVous n'avez pas la permission d'executer cette commande";
-    public static String PLAYER_ONLY = PREFIX + "§cVous devez être un joueur pour executer cette commande";
-
-    public static void sendMessage(Player p, String m){
-        p.sendMessage(ChatColor.translateAlternateColorCodes('&', m));
+    public static void sendMessage(Player p, String message) {
+        p.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
     }
 
-    public static void sendCentered(Player p, String m){
+    private final static int CENTER_PX = 154;
+
+    public static void sendCentered(Player player, String message){
+        if(message == null || message.isEmpty()) player.sendMessage("");
+        message = ChatColor.translateAlternateColorCodes('&', message);
+
         int messagePxSize = 0;
         boolean previousCode = false;
         boolean isBold = false;
-        for(char c : m.toCharArray()){
+
+        for(char c : message.toCharArray()){
             if(c == '§'){
                 previousCode = true;
                 continue;
-            } else if(previousCode == true){
+            }else if(previousCode == true){
                 previousCode = false;
                 if(c == 'l' || c == 'L'){
                     isBold = true;
                     continue;
-                } else isBold = false;
-            } else{
+                }else isBold = false;
+            }else{
                 DefaultFontInfo dFI = DefaultFontInfo.getDefaultFontInfo(c);
                 messagePxSize += isBold ? dFI.getBoldLength() : dFI.getLength();
                 messagePxSize++;
             }
         }
+
         int halvedMessageSize = messagePxSize / 2;
-        int toCompensate = 154 - halvedMessageSize;
+        int toCompensate = CENTER_PX - halvedMessageSize;
         int spaceLength = DefaultFontInfo.SPACE.getLength() + 1;
         int compensated = 0;
         StringBuilder sb = new StringBuilder();
@@ -41,8 +44,6 @@ public class Messages {
             sb.append(" ");
             compensated += spaceLength;
         }
-        m = ChatColor.translateAlternateColorCodes('&', m);
-        p.sendMessage(sb.toString() + m);
+        player.sendMessage(sb.toString() + message);
     }
-
 }
